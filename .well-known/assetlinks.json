@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.kerymony.reportmaker",
+        "sha256_cert_fingerprints": ["99:71:11:6B:DF:86:1A:ED:BB:AD:1F:AD:9E:8F:D7:54:26:AB:19:FA:74:39:B5:33:4E:2F:30:E4:73:57:A0:4C"]
+      }
+    }]

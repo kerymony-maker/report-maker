@@ -1,0 +1,2399 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f2b5b">
+<title>🏫 گزارش‌ساز — ساخت سریع ویدیوی گزارش</title>
+<!-- manifest omitted in standalone -->
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vazirmatn@33.0.3/Vazirmatn-font-face.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/lalezar@5/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/markazi-text@5/700.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/gulzar@5/index.css">
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:Vazirmatn,Tahoma,sans-serif;background:#eef1f9;color:#1e2438}
+.topbar{position:sticky;top:0;z-index:20;display:flex;gap:8px;align-items:center;background:linear-gradient(135deg,#0f2b5b,#1e56a0);color:#fff;padding:10px 12px}
+.topbar h1{font-size:1.02rem;margin:0;white-space:nowrap}
+.proj-name{flex:1;min-width:60px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:10px;color:#fff;padding:8px 12px;font-family:inherit;font-size:.95rem}
+.proj-name::placeholder{color:rgba(255,255,255,.6)}
+.tb-actions{display:flex;gap:6px;align-items:center}
+.tb-actions button{border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.12);color:#fff;border-radius:9px;padding:7px 9px;cursor:pointer;font-size:.9rem}
+.tb-actions button[disabled]{opacity:.35}
+#saveDot{font-size:.85rem;opacity:.85;transition:.2s}
+main{max-width:640px;margin:0 auto;padding:10px 12px 60px}
+.card{background:#fff;border-radius:16px;box-shadow:0 3px 14px rgba(30,40,90,.08);padding:14px;margin:10px 0}
+.center{text-align:center}
+.row{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap}
+h3{margin:0 0 10px;font-size:.98rem;color:#17356e}
+.hint{font-size:.76rem;color:#7b83a0;margin:6px 0 0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:12px;padding:11px 18px;font-family:inherit;font-size:.95rem;font-weight:700;cursor:pointer;text-decoration:none;color:#1e2438;background:#e9ecf5}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:linear-gradient(135deg,#1e56a0,#3f8cff);color:#fff;box-shadow:0 4px 12px rgba(30,86,160,.3)}
+.btn.ghost{background:#eef3ff;color:#1e56a0;border:2px solid #d5e2ff}
+.btn.danger{background:#ffe8ec;color:#d81b60;border:2px solid #ffc9d6}
+.btn.big{width:100%;padding:15px;font-size:1.05rem;margin:7px 0}
+.btn.small{padding:6px 12px;font-size:.8rem;margin-top:0}
+.btn[disabled]{opacity:.5;pointer-events:none}
+details{border:2px solid #e8ecf7;border-radius:14px;padding:10px 14px;margin:10px 0}
+summary{cursor:pointer;font-weight:800;color:#17356e;font-size:.9rem;user-select:none}
+details[open] summary{margin-bottom:8px}
+.field{margin:11px 0;display:flex;flex-direction:column;gap:5px;font-size:.88rem}
+.field>span{font-weight:700;color:#17356e;font-size:.8rem}
+.chips{display:flex;gap:7px;flex-wrap:wrap}
+.chips button{border:2px solid #dfe5f5;background:#f7f9ff;border-radius:999px;padding:7px 13px;font-family:inherit;font-size:.82rem;font-weight:700;cursor:pointer;color:#17356e;white-space:nowrap}
+.chips button.on{background:linear-gradient(135deg,#1e56a0,#3f8cff);color:#fff;border-color:transparent}
+input[type=text],input:not([type]),input[type=number],select{font-family:inherit;font-size:.92rem;padding:9px 12px;border:2px solid #dfe5f5;border-radius:10px;background:#f8f9ff;color:#1e2438;width:100%}
+input:focus,select:focus{outline:none;border-color:#3f8cff}
+input[type=range]{accent-color:#1e56a0;width:100%}
+input[type=color]{width:46px;height:34px;border:1px solid #dfe5f5;border-radius:8px;background:#fff;padding:2px}
+.chk{display:flex;align-items:center;gap:7px;font-weight:700;color:#17356e;cursor:pointer;font-size:.85rem}
+.chk input{width:18px;height:18px;accent-color:#1e56a0}
+#cv{display:block;margin:0 auto 8px;max-width:100%;max-height:52vh;width:auto;height:auto;border-radius:12px;background:#0a0f1e;box-shadow:0 5px 16px rgba(0,0,0,.22)}
+.pbar{height:10px;background:#e4e9f7;border-radius:999px;overflow:hidden;margin:8px 0}
+.pbar div{height:100%;width:0%;background:linear-gradient(90deg,#1e56a0,#3f8cff);border-radius:999px;transition:width .15s}
+/* multi-track timeline */
+.mtl{display:flex;border:2px solid #e8ecf7;border-radius:12px;background:#fbfcff;overflow-x:auto}
+.mtl-labels{flex:0 0 62px;display:flex;flex-direction:column;gap:4px;padding:0 4px 6px}
+.mtl-labels .sp{height:20px}
+.mtl-labels div:not(.sp){height:28px;display:flex;align-items:center;justify-content:center;font-size:.64rem;font-weight:800;color:#5b678f}
+.mtl-body{position:relative;flex:1;padding:4px 6px 6px 0}
+.tl-ruler{position:relative;height:16px;margin-bottom:4px;background:#eef2fb;border-radius:6px;cursor:crosshair}
+.tl-ruler .tick{position:absolute;top:0;bottom:0;border-right:1px solid #c3cfe9;font-size:.52rem;color:#7c86ab;padding:0 3px 0 0;pointer-events:none}
+.tl-lane{position:relative;height:28px;margin-bottom:4px;background:#f1f4fc;border-radius:7px;overflow:hidden}
+.blk{position:absolute;top:3px;bottom:3px;border-radius:5px;font-size:.6rem;color:#fff;display:flex;align-items:center;padding:0 5px;white-space:nowrap;overflow:hidden;cursor:pointer;border:1px solid rgba(255,255,255,.4);user-select:none}
+.blk.k-photo{background:#2e7d32}.blk.k-video{background:#8e24aa}.blk.k-title{background:#17356e}.blk.k-outro{background:#546e7a}
+.blk.k-audio{background:#00695c}.blk.k-music{background:#4a148c}.blk.k-text{background:#c62828}
+.blk.sel{outline:2px solid #ffb300}
+.tl-playhead{position:absolute;top:2px;bottom:4px;width:2px;background:#ff1744;pointer-events:none;z-index:5;box-shadow:0 0 4px rgba(255,23,68,.7)}
+.tl-playhead::before{content:'';position:absolute;top:0;right:-4px;border:5px solid transparent;border-top-color:#ff1744}
+.tedit{border:2px solid #ffd0d6;background:#fff5f6;border-radius:12px;padding:10px 12px;margin-top:8px}
+.clip{display:flex;gap:9px;align-items:stretch;border:2px solid #e8ecf7;border-radius:13px;padding:8px;margin-bottom:8px;cursor:pointer}
+.clip.sel{border-color:#3f8cff;background:#f4f8ff}
+.clip .thumb{width:60px;height:60px;border-radius:9px;object-fit:cover;background:#eee;flex:0 0 auto}
+.clip .meta{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px}
+.clip-name{font-size:.78rem;font-weight:800;color:#3c466b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.clip input.cap{font-size:.85rem;padding:7px 10px}
+.clip input.cap.sub{font-size:.78rem;opacity:.92}
+.clip .row select{width:auto;min-width:88px;font-size:.76rem;padding:5px 7px}
+.clip .ops{display:flex;flex-direction:column;justify-content:space-between;gap:3px}
+.clip .ops button{border:0;background:#eef3ff;border-radius:8px;font-size:.82rem;padding:3px 7px;cursor:pointer}
+.video-tools label{display:inline-flex;align-items:center;gap:4px;font-size:.75rem}
+.video-tools input[type=number]{width:64px;padding:5px 7px;font-size:.8rem}
+.video-tools select{width:auto;font-size:.8rem;padding:5px 7px}
+.stepper{display:inline-flex;align-items:center;gap:5px;background:#f1f4fc;border-radius:999px;padding:3px 7px;font-size:.8rem;font-weight:700}
+.stepper button{border:0;background:#fff;border-radius:999px;width:24px;height:24px;font-size:.95rem;cursor:pointer;color:#1e56a0;font-weight:900}
+.len{font-size:.76rem;font-weight:700;color:#7b83a0}
+.lib{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.lib-item{display:flex;gap:8px;border:2px solid #e8ecf7;border-radius:12px;padding:6px;align-items:center}
+.lib-item img{width:52px;height:52px;border-radius:8px;object-fit:cover;background:#eee}
+.lib-meta{flex:1;min-width:0}
+.lib-name{font-size:.72rem;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lib-ops{display:flex;flex-direction:column;gap:3px}
+.lib-ops button{border:0;background:#eef3ff;border-radius:7px;padding:3px 6px;cursor:pointer;font-size:.8rem}
+.proj-row{display:flex;justify-content:space-between;align-items:center;gap:8px;border:2px solid #e8ecf7;border-radius:12px;padding:8px 10px;margin-bottom:7px}
+.proj-info{display:flex;flex-direction:column;min-width:0}
+#logoPrev img{width:56px;height:56px;object-fit:contain;border:1px dashed #c9d4ee;border-radius:9px;background:#fff}
+#result video{width:100%;max-height:50vh;border-radius:12px;background:#000}
+.mono{direction:ltr;font-variant-numeric:tabular-nums}
+#toasts{position:fixed;bottom:14px;right:14px;left:14px;display:flex;flex-direction:column;align-items:center;gap:6px;z-index:99;pointer-events:none}
+.toast{background:#22315e;color:#fff;border-radius:12px;padding:10px 18px;font-size:.85rem;box-shadow:0 6px 18px rgba(0,0,0,.25);animation:tin .25s;max-width:92%}
+.toast.err{background:#a8324a}
+.toast.out{opacity:0;transition:.4s}
+@keyframes tin{from{transform:translateY(12px);opacity:0}}
+footer{text-align:center;font-size:.72rem;color:#98a0bd;padding:8px 16px 26px}
+.wiz-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+.wiz-grid .full{grid-column:1/-1}
+@media(max-width:420px){.wiz-grid{grid-template-columns:1fr}.wiz-grid .full{grid-column:auto}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <button id="homeBtn" class="tb-home" title="صفحهٔ اول" style="border:0;background:rgba(255,255,255,.12);color:#fff;border-radius:9px;padding:7px 9px;cursor:pointer">🏠</button>
+  <input id="projName" class="proj-name" placeholder="نام گزارش…" >
+  <div class="tb-actions">
+    <span id="saveDot" title="ذخیرهٔ خودکار">💾</span>
+    <button id="undoBtn" title="واگرد (Ctrl+Z)">↩️</button>
+    <button id="redoBtn" title="ازنو (Ctrl+Y)">↪️</button>
+  </div>
+</header>
+<main>
+  <!-- ================= HOME ================= -->
+  <section id="scrHome" class="screen">
+    <div class="card center">
+      <div style="font-size:44px">🏫🎬</div>
+      <h2 style="margin:.1em 0 .5em">گزارش‌ساز</h2>
+      <button id="wizardBtn" class="btn primary big">⚡ ساخت گزارش سریع (پیشنهادی)</button>
+      <button id="newProjBtn" class="btn ghost big">📄 پروژهٔ جدید خالی</button>
+      <button id="demoBtn" class="btn ghost big">✨ نمونهٔ آزمایشی</button>
+      <p class="hint">عکس و فیلم بده، عنوان و لوگو بذار؛ تایم‌لاین خودش ساخته می‌شه و خروجی MP4 می‌گیری.</p>
+    </div>
+    <div class="card" id="wizardCard" hidden>
+      <h3>⚡ ساخت گزارش سریع</h3>
+      <div class="wiz-grid">
+        <div class="field full"><span>عنوان گزارش</span><input id="wTitle" placeholder="مثلاً: گزارش بازدید سرزده از مدرسه"></div>
+        <div class="field"><span>نام مدرسه / کانون / واحد</span><input id="wSchool" value="کانون فرهنگی تربیتی حضرت سلمان"></div>
+        <div class="field"><span>تاریخ</span><input id="wDate" placeholder="۱۴۰۵/۰۷/۰۹"></div>
+        <div class="field"><span>عکس‌ها و فیلم‌ها *</span><label class="btn ghost small" for="wFiles">انتخاب فایل‌ها</label><input type="file" id="wFiles" accept="image/*,video/*" multiple hidden><span class="hint" id="wFilesName"></span></div>
+        <div class="field"><span>مدت هدف (دقیقه)</span><input type="number" id="wTarget" value="2" min="0.5" max="30" step="0.5"></div>
+        <div class="field"><span>نسبت تصویر</span>
+          <select id="wAspect">
+            <option value="16:9">افقی ۱۶:۹ — گزارش اداری / یوتیوب</option>
+            <option value="9:16">عمودی ۹:۱۶ — استوری / ایتا و روبیکا</option>
+            <option value="4:3">۴:۳ — پروژکتور</option>
+            <option value="1:1">مربع ۱:۱ — پست</option>
+          </select>
+        </div>
+        <div class="field"><span>لوگو (اختیاری)</span><label class="btn ghost small" for="wLogo">انتخاب لوگو</label><input type="file" id="wLogo" accept="image/*" hidden></div>
+        <div class="field"><span>موزیک (اختیاری)</span><label class="btn ghost small" for="wMusic">انتخاب موزیک</label><input type="file" id="wMusic" accept="audio/*" hidden></div>
+      </div>
+      <button id="wGo" class="btn primary big">🚀 ساخت خودکار تایم‌لاین</button>
+      <button id="wCancel" class="btn ghost small">بستن</button>
+    </div>
+    <div class="card"><h3>📁 پروژه‌های ذخیره‌شده</h3><div id="projList"></div></div>
+  </section>
+
+  <!-- ================= EDITOR ================= -->
+  <section id="scrEdit" class="screen" hidden>
+    <div class="card center">
+      <canvas id="cv" width="640" height="360"></canvas>
+      <div class="pbar"><div id="pbFill"></div></div>
+      <div class="row">
+        <button id="playBtn" class="btn primary">▶️ پخش</button>
+        <span id="timeLbl" class="hint mono">0.0 / 0.0</span>
+      </div>
+      <p class="hint">Space پخش/توقف • ← → جابه‌جایی • Ctrl+Z واگرد • D تکثیر • S برش</p>
+    </div>
+
+    <div class="card">
+      <h3>🗂️ تایم‌لاین چندلایه</h3>
+      <div class="mtl" id="mtl">
+        <div class="mtl-labels">
+          <div class="sp"></div>
+          <div>متن</div>
+          <div>ویدیو/عکس</div>
+          <div>صدا</div>
+          <div>موزیک</div>
+        </div>
+        <div class="mtl-body" id="mtlBody">
+          <div class="tl-ruler" id="tlRuler"></div>
+          <div class="tl-lane" id="laneTexts"></div>
+          <div class="tl-lane" id="laneVisual"></div>
+          <div class="tl-lane" id="laneAudioTl"></div>
+          <div class="tl-lane" id="laneMusic" style="margin-bottom:0"></div>
+          <div class="tl-playhead" id="tlPH" style="display:none"></div>
+        </div>
+      </div>
+      <div class="row" style="justify-content:flex-start;margin-top:8px">
+        <button id="addTextBtn" class="btn ghost small">➕ متن در زمان فعلی</button>
+        <span class="hint">روی خط‌کش بزن برای پرش • روی بلوک‌ها بزن برای انتخاب</span>
+      </div>
+      <div class="tedit" id="textEdit" hidden>
+        <div class="field"><span>متن</span><input id="txTextInput" placeholder="مثلاً: دبیرستان شهید بهشتی"></div>
+        <div class="row" style="justify-content:flex-start;gap:6px">
+          <label class="hint">شروع <input type="number" id="txStart" min="0" step="0.5" style="width:70px"></label>
+          <label class="hint">مدت <input type="number" id="txDur" min="0.5" step="0.5" style="width:70px"></label>
+          <select id="txPos" style="width:auto"><option value="bottom">پایین</option><option value="middle">وسط</option><option value="top">بالا</option></select>
+          <select id="txAnim" style="width:auto"><option value="fade">محو</option><option value="pop">پرش</option><option value="slide">ورود از کنار</option><option value="type">تایپ شدن ⌨️</option></select>
+          <input type="color" id="txColor" value="#ffffff" title="رنگ">
+          <button id="txDel" class="btn danger small">🗑️</button>
+          <button id="txClose" class="btn ghost small">بستن</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🎞️ تایم‌لاین <span class="hint" id="tlMeta"></span></h3>
+      <div id="clipList"></div>
+      <div class="row" style="justify-content:flex-start">
+        <label class="btn ghost small" for="addMediaIn">➕ افزودن عکس/فیلم</label>
+        <input type="file" id="addMediaIn" accept="image/*,video/*" multiple hidden>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📚 رسانه‌های پروژه</h3>
+      <div id="libGrid" class="lib"></div>
+      <p class="hint" id="audioLine"></p>
+    </div>
+
+    <details class="card" open>
+      <summary>⚙️ قاب، نمایش و حرکت</summary>
+      <div class="field"><span>نسبت تصویر</span><div class="chips" id="aspectChips"></div></div>
+      <div class="field" id="customDims" style="display:none"><span>سایز سفارشی (پیکسل)</span>
+        <div class="row" style="justify-content:flex-start">
+          <input type="number" id="cw" style="width:90px"> ×
+          <input type="number" id="ch" style="width:90px">
+          <button id="cwApply" class="btn ghost small">اعمال</button>
+        </div>
+      </div>
+      <div class="field"><span>نحوهٔ نمایش پیش‌فرض عکس/ویدئو</span>
+        <select id="fitSel"><option value="fill">پرکردن کادر (Fill) — برش دارد</option><option value="fit">نمایش کامل (Fit) — با پس‌زمینه</option></select>
+      </div>
+      <div class="field"><span>پس‌زمینهٔ فضای خالی (حالت Fit)</span>
+        <div class="row" style="justify-content:flex-start">
+          <select id="bgSel" style="max-width:220px">
+            <option value="blur">بلور خود عکس</option><option value="darkblur">بلور تیره</option>
+            <option value="lightblur">بلور روشن</option><option value="mirror">آینه‌ای</option>
+            <option value="solid">رنگ یکدست</option><option value="gradient">گرادیان تم</option>
+          </select>
+          <input type="color" id="bgColorIn" title="رنگ پس‌زمینهٔ یکدست">
+          <button id="applyFitAll" class="btn ghost small">اعمال به همه</button>
+        </div>
+      </div>
+      <div class="field"><span>حرکت پیش‌فرض روی عکس‌ها</span>
+        <div class="row" style="justify-content:flex-start">
+          <select id="motionSel" style="max-width:200px">
+            <option value="auto">خودکار (متناوب)</option><option value="zoomin">زوم به داخل</option>
+            <option value="zoomout">زوم به خارج</option><option value="panlr">پن افقی</option>
+            <option value="panud">پن عمودی</option><option value="cine">سینمایی آهسته</option>
+            <option value="none">بدون حرکت</option>
+          </select>
+          <span class="hint">شدت</span><input type="range" id="motionIntR" min="0.3" max="2" step="0.1" style="width:90px">
+          <b class="hint" id="motionIntLbl">×1.0</b>
+          <button id="applyMotionAll" class="btn ghost small">اعمال به همه</button>
+        </div>
+      </div>
+      <div class="field"><span>حالت جابه‌جایی بین کلیپ‌ها</span>
+        <div class="row" style="justify-content:flex-start">
+          <select id="transSel" style="max-width:180px">
+            <option value="fade">محو</option><option value="cut">برش</option><option value="slide">کشویی</option>
+            <option value="zoom">زوم</option><option value="push">هل دادن</option><option value="wipe">پرده‌ای</option>
+            <option value="bounce">فنری</option><option value="spin">چرخشی</option><option value="blur">بلور</option>
+          </select>
+          <span class="hint">مدت</span><input type="range" id="transDurR" min="0.2" max="1" step="0.1" style="width:80px"><b class="hint" id="transDurLbl">0.5s</b>
+        </div>
+      </div>
+      <div class="field"><span>مدت نمایش هر عکس</span>
+        <div class="row" style="justify-content:flex-start">
+          <input type="range" id="photoDurR" min="1" max="10" step="0.5" style="width:130px"><b class="hint" id="photoDurLbl">3.0s</b>
+          <button id="applyDurAll" class="btn ghost small">اعمال به همهٔ عکس‌ها</button>
+        </div>
+      </div>
+      <div class="field"><span>فیلتر رنگی کلی</span>
+        <select id="filterSel">
+          <option value="none">عادی</option><option value="vivid">زنده</option><option value="warm">گرم</option>
+          <option value="cool">خنک</option><option value="cinematic">سینمایی</option><option value="mono">سیاه‌وسفید</option>
+        </select>
+      </div>
+      <div class="field"><span>تم رنگی اسلایدهای عنوان/پایان</span><div class="chips" id="themeChips"></div></div>
+      <div class="field"><label class="chk"><input type="checkbox" id="fxChk"> افکت‌های شناور بامزه (برای گزارش رسمی خاموش باشد)</label></div>
+    </details>
+
+    <details class="card">
+      <summary>✒️ متن، فونت، لوگو و سرصفحه</summary>
+      <div class="field"><span>فونت فارسی</span><div class="chips" id="fontChips"></div></div>
+      <div class="field"><span>جای متن کپشن</span>
+        <select id="textPosSel"><option value="bottom">پایین</option><option value="middle">وسط</option><option value="top">بالا</option></select>
+      </div>
+      <div class="field"><span>اندازهٔ متن کپشن</span><input type="range" id="capSizeR" min="0.6" max="1.8" step="0.1"></div>
+      <div class="field"><span>عنوان اول ویدیو</span><input id="titleIn" placeholder="مثلاً: گزارش بازدید از مدرسه…"></div>
+      <div class="field"><span>نام مدرسه / واحد</span><input id="schoolIn" placeholder="در اسلاید عنوان نمایش داده می‌شود"></div>
+      <div class="field"><span>تاریخ</span><input id="dateIn" placeholder="۱۴۰۵/۰۷/۰۹"></div>
+      <div class="field"><span>متن پایان ویدیو</span><input id="outroIn" placeholder="با تشکر…"></div>
+      <div class="field"><span>سرصفحه (بالای همهٔ فریم‌ها)</span><input id="headerIn" placeholder="مثلاً: ادارهٔ آموزش و پرورش منطقه…"></div>
+      <div class="field"><span>پاصفحه (پایین همهٔ فریم‌ها)</span><input id="footerIn" placeholder="مثلاً: نام مدرسه • تاریخ"></div>
+      <div class="field"><span>لوگو / واترمارک</span>
+        <div class="row" style="justify-content:flex-start">
+          <label class="btn ghost small" for="logoIn">انتخاب تصویر لوگو</label>
+          <input type="file" id="logoIn" accept="image/*" hidden>
+          <span id="logoPrev"></span>
+          <button id="logoRm" class="btn danger small">حذف لوگو</button>
+        </div>
+        <div class="row" style="justify-content:flex-start">
+          <select id="logoPosSel" style="max-width:150px">
+            <option value="tl">بالا-چپ</option><option value="tr">بالا-راست</option>
+            <option value="bl">پایین-چپ</option><option value="br">پایین-راست</option>
+          </select>
+          <span class="hint">اندازه</span><input type="range" id="logoSizeR" min="0.05" max="0.4" step="0.01" style="width:80px">
+          <span class="hint">شفافیت</span><input type="range" id="logoOpR" min="0.2" max="1" step="0.05" style="width:80px">
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary>🎵 صدا</summary>
+      <div class="field"><span>صدا روی تایم‌لاین (چند فایل، هرکدام با زمان شروع مستقل)</span>
+        <div class="row" style="justify-content:flex-start">
+          <label class="btn ghost small" for="laneAudioIn">➕ افزودن فایل صوتی</label>
+          <input type="file" id="laneAudioIn" accept="audio/*" multiple hidden>
+          <span class="hint">در «زمان فعلیِ پخش» قرار می‌گیرد</span>
+        </div>
+        <div id="audioLane"></div>
+      </div>
+      <div class="field"><span>موزیک زمینه (تمام مدت، تکرارشونده)</span>
+        <div class="row" style="justify-content:flex-start">
+          <label class="btn ghost small" for="musicIn">انتخاب موزیک</label>
+          <input type="file" id="musicIn" accept="audio/*" hidden>
+          <span id="musicName" class="hint"></span>
+        </div>
+      </div>
+      <div class="field"><span>بلندی موزیک</span><input type="range" id="musicVolR" min="0" max="1" step="0.05"></div>
+      <div class="field"><label class="chk"><input type="checkbox" id="musicFadeChk" checked> محو شدن اول و آخر (Fade)</label></div>
+      <p class="hint">صدای خود ویدئوها از کارت هر کلیپ (داویت، ولوم، سرعت) کنترل می‌شود. پیش‌نمایش بی‌صداست؛ صدا در خروجی اعمال می‌شود.</p>
+    </details>
+
+    <details class="card" open>
+      <summary>🎥 خروجی ویدیو</summary>
+      <div class="field"><span>حالت خروجی</span>
+        <div class="chips" id="expModeChips">
+          <button data-em="quality" class="on">🎚️ کیفیت دلخواه</button>
+          <button data-em="size">📦 حجم مشخص</button>
+        </div>
+      </div>
+      <div class="field" id="sizeModeBox" style="display:none">
+        <span>حجم هدف فایل (مگابایت) — تنظیمات خودکار پیشنهاد می‌شود</span>
+        <div class="row" style="justify-content:flex-start">
+          <input type="number" id="expSizeMB" value="15" min="1" max="4096" step="0.5" style="width:110px">
+          <span class="hint">MB</span>
+        </div>
+        <p class="hint" id="sizeCalc"></p>
+        <p class="hint" id="sizeWarn" style="color:#b0507a"></p>
+        <p class="hint">حجم نهایی همیشه نزدیک یا کمتر از این عدد است تا در پیام‌رسان‌ها و حافظه جا شود.</p>
+      </div>
+      <div id="qualityModeBox">
+        <div class="field"><span>کیفیت (پهنای کوتاه فریم)</span><div class="chips" id="resChips"></div></div>
+        <div class="field"><span>فریم‌بر ثانیه</span><div class="chips" id="fpsChips"></div></div>
+        <div class="field"><span>حالت فشرده‌سازی</span><div class="chips" id="qChips"></div></div>
+        <p class="hint" id="manualEst"></p>
+      </div>
+      <button id="exportBtn" class="btn primary big">🎥 ساخت ویدیو (<span id="expPreset">1080p • 30fps</span>)</button>
+      <button id="cancelBtn" class="btn danger big" hidden>⏹ لغو</button>
+      <div id="exBox" hidden>
+        <div class="pbar"><div id="exFill"></div></div>
+        <p id="exText" class="hint center"></p>
+      </div>
+      <p class="hint">خروجی MP4 (و در صورت پشتیبانی مرورگر WebM). حین ساخت صفحه را باز نگه دارید.</p>
+    </details>
+
+    <div class="card center" id="result" hidden>
+      <h3>🎉 ویدیوی گزارش آماده‌ست!</h3>
+      <video id="resVid" controls loop playsinline></video>
+      <p class="hint" id="resSize"></p>
+      <div class="row" style="margin-top:10px">
+        <a id="dlBtn" class="btn primary" download>⬇️ دانلود</a>
+        <button id="shareBtn" class="btn ghost">📤 اشتراک‌گذاری</button>
+        <button id="againBtn" class="btn ghost">بستن</button>
+      </div>
+    </div>
+  </section>
+</main>
+<footer>همه‌چیز داخل مرورگر خودت پردازش می‌شود — فایل‌ها جایی آپلود نمی‌شوند 🔒</footer>
+<script>
+try {
+/* ===== گزارش‌ساز — standalone bundle (auto-generated by build_standalone.py) ===== */
+
+/* ---------- util.js ---------- */
+/* util.js — helpers shared by all modules */
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const clamp = (a, b, v) => Math.max(a, Math.min(b, v));
+const uid = p => p + '_' + Math.random().toString(36).slice(2, 9) + Date.now().toString(36).slice(-4);
+const debounce = (fn, ms) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
+
+function easeOutBack(x) { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); }
+function easeInOut(x) { return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; }
+
+function fmtSize(bytes) {
+  if (!bytes) return '';
+  if (bytes < 1048576) return (bytes / 1024).toFixed(0) + ' کیلوبایت';
+  return (bytes / 1048576).toFixed(1) + ' مگابایت';
+}
+function fmtDur(s) {
+  if (!isFinite(s)) return '';
+  const m = Math.floor(s / 60), sec = Math.round(s % 60);
+  return m > 0 ? `${m}:${String(sec).padStart(2, '0')} دقیقه` : `${s.toFixed(1)} ثانیه`;
+}
+function todayFa() {
+  try { return new Date().toLocaleDateString('fa-IR'); } catch (e) { return ''; }
+}
+function toast(msg, kind = '') {
+  let host = document.querySelector('#toasts');
+  if (!host) { host = document.createElement('div'); host.id = 'toasts'; document.body.appendChild(host); }
+  const el = document.createElement('div');
+  el.className = 'toast ' + kind;
+  el.textContent = msg;
+  host.appendChild(el);
+  setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 400); }, 3400);
+}
+
+/* ---------- store.js ---------- */
+/* store.js — project model, command stack (undo/redo), IndexedDB persistence */
+
+
+const store = {
+  project: null,          // active project {id,name,settings,items}
+  media: new Map(),       // assetId -> asset {id,kind,name,type,size,w,h,dur,thumb,blob,url,bitmap,tinyBitmap}
+  undoStack: [], redoStack: [],
+  version: 0,             // bumped on every mutation (renderer caches invalidate)
+  selectedId: null,
+  listeners: new Set(),
+};
+
+const THEMES = {
+  official: { name: '🎒 رسمی اداری', bg: ['#0f2b5b', '#1e56a0'], capBg: 'rgba(10,32,70,.85)', emoji: ['📌','📋','🏛️','✅','📁'] },
+  rainbow:  { name: '🌈 رنگین‌کمان', bg: ['#ff9a9e', '#fbc2eb', '#a18cd1'], capBg: 'rgba(216,27,96,.82)', emoji: ['✨','❤️','🎈','🌟','🎉'] },
+  school:   { name: '🎒 مدرسه', bg: ['#2193b0', '#6dd5ed'], capBg: 'rgba(2,119,189,.85)', emoji: ['📚','✏️','🎓','⭐','🚌'] },
+  nature:   { name: '🌿 طبیعت', bg: ['#134e5e', '#71b280'], capBg: 'rgba(27,94,32,.85)', emoji: ['🌿','🦋','🌞','🍀','🐝'] },
+  neon:     { name: '🌌 شب نئون', bg: ['#0f0c29', '#302b63', '#24243e'], capBg: 'rgba(98,63,214,.88)', emoji: ['⚡','🌟','🎮','🔥','💫'] },
+};
+const FONTS = {
+  vazirmatn: { name: 'وزیرمتن', family: 'Vazirmatn', weight: 800 },
+  lalezar:   { name: 'لاله‌زار', family: 'Lalezar', weight: 400 },
+  markazi:   { name: 'مرکزی', family: 'Markazi Text', weight: 700 },
+  gulzar:    { name: 'نستعلیق', family: 'Gulzar', weight: 400 },
+};
+const ASPECTS = {
+  '9:16': [1080, 1920], '1:1': [1080, 1080], '16:9': [1920, 1080],
+  '4:5': [1080, 1350], '4:3': [1440, 1080],
+};
+const MOTIONS = {
+  auto: 'خودکار', none: 'بدون حرکت', zoomin: 'زوم به داخل', zoomout: 'زوم به خارج',
+  panlr: 'پن چپ↔راست', panud: 'پن بالا↔پایین', cine: 'سینمایی آهسته',
+};
+const FITS = { fill: 'پرکردن کادر', fit: 'نمایش کامل' };
+const BGS = {
+  blur: 'بلور خود عکس', darkblur: 'بلور تیره', lightblur: 'بلور روشن',
+  solid: 'رنگ یکدست', gradient: 'گرادیان تم', mirror: 'آینه‌ای',
+};
+const TRANSITIONS = {
+  fade: 'محو', cut: 'برش', slide: 'کشویی', zoom: 'زوم', push: 'هل دادن',
+  wipe: 'پرده‌ای', bounce: 'فنری', spin: 'چرخشی', blur: 'بلور',
+};
+const FILTER_PRESETS = {
+  none: '', warm: 'sepia(.25) saturate(1.35) hue-rotate(-8deg) brightness(1.04)',
+  cool: 'saturate(1.15) hue-rotate(14deg) brightness(1.03)',
+  mono: 'grayscale(1) contrast(1.12)',
+  cinematic: 'contrast(1.15) saturate(1.2) brightness(.96)',
+  vivid: 'saturate(1.65) contrast(1.08)',
+};
+
+const ORG_NAME = 'کانون فرهنگی تربیتی حضرت سلمان';
+
+function defaultSettings() {
+  return {
+    aspect: '16:9', customW: 0, customH: 0,
+    transition: 'fade', transDur: 0.5,
+    photoDur: 3, motion: 'auto', motionIntensity: 1,
+    fitDefault: 'fill', bgDefault: 'blur', bgColor: '#10254d',
+    theme: 'official', font: 'vazirmatn', fx: false, filter: 'none',
+    titleText: '', schoolName: ORG_NAME, reportDate: '', outroText: 'با تشکر از همراهی شما 🙏',
+    headerText: '', footerText: ORG_NAME,
+    logoId: null, logoPos: 'tl', logoSize: 0.14, logoOpacity: 0.9,
+    musicId: null, musicVol: 0.8, musicFade: true,
+    textPos: 'bottom', capSize: 1,
+  };
+}
+function newProject(name = 'گزارش ' + ORG_NAME) {
+  return { id: uid('p'), name, settings: defaultSettings(), items: [], audio: [], texts: [], created: Date.now(), modified: Date.now() };
+}
+function newAudioClip(srcId, startAt, dur) {
+  return { id: uid('a'), srcId, startAt, dur, volume: 1 };
+}
+const TEXT_ANIMS = { fade: 'محو', pop: 'پرش', slide: 'ورود از کنار', type: 'تایپ شدن ⌨️' };
+function newTextClip(text, start, dur) {
+  return { id: uid('t'), text, start, dur, pos: 'bottom', anim: 'fade', color: '#ffffff', size: 1 };
+}
+function newClip(kind, srcId = null, extra = {}) {
+  const base = { id: uid('c'), kind, srcId, caption: '', sub: '', sticker: '',
+    fit: null, bg: null, motion: null, filter: null,
+    scale: 1, offsetX: 0, offsetY: 0, rotation: 0, ...extra };
+  if (kind === 'photo') base.dur = extra.dur ?? (store.project ? store.project.settings.photoDur : 3);
+  if (kind === 'video') { base.srcStart = 0; base.srcEnd = extra.srcEnd ?? 0; base.speed = 1; base.volume = 1; base.muted = false; }
+  return base;
+}
+
+/* ---------- reactive plumbing ---------- */
+function notify() { store.listeners.forEach(fn => { try { fn(); } catch (e) { console.error(e); } }); }
+function onChange(fn) { store.listeners.add(fn); return () => store.listeners.delete(fn); }
+function snapshot() {
+  const p = store.project;
+  return JSON.stringify({ name: p.name, settings: p.settings, items: p.items, audio: p.audio || [], texts: p.texts || [] });
+}
+function commit(fn, { noUndo = false, silent = false } = {}) {
+  if (!store.project) return;
+  if (!noUndo) {
+    store.undoStack.push(snapshot());
+    if (store.undoStack.length > 60) store.undoStack.shift();
+    store.redoStack.length = 0;
+  }
+  fn(store.project);
+  store.project.modified = Date.now();
+  store.version++;
+  scheduleSave();
+  if (!silent) notify();
+}
+function undo() {
+  const s = store.undoStack.pop();
+  if (!s || !store.project) return false;
+  store.redoStack.push(snapshot());
+  const o = JSON.parse(s);
+  store.project.name = o.name; store.project.settings = o.settings; store.project.items = o.items;
+  store.project.audio = o.audio || []; store.project.texts = o.texts || [];
+  store.version++; scheduleSave(); notify();
+  return true;
+}
+function redo() {
+  const s = store.redoStack.pop();
+  if (!s || !store.project) return false;
+  store.undoStack.push(snapshot());
+  const o = JSON.parse(s);
+  store.project.name = o.name; store.project.settings = o.settings; store.project.items = o.items;
+  store.project.audio = o.audio || []; store.project.texts = o.texts || [];
+  store.version++; scheduleSave(); notify();
+  return true;
+}
+function canUndo() { return store.undoStack.length > 0; }
+function canRedo() { return store.redoStack.length > 0; }
+
+/* ---------- timeline segments (cached) ---------- */
+let segCache = { version: -1, list: [], total: 0, starts: [] };
+function segments() {
+  if (segCache.version === store.version) return segCache;
+  const p = store.project, list = [];
+  if (p) {
+    if (p.settings.titleText.trim()) list.push({ kind: 'title', dur: 3.2 });
+    for (const it of p.items) {
+      if (it.kind === 'video') {
+        const src = store.media.get(it.srcId);
+        const len = Math.max(0.2, (it.srcEnd - it.srcStart)) / (it.speed || 1);
+        list.push({ kind: 'video', clip: it, dur: Math.min(len, src ? len : len) });
+      } else list.push({ kind: it.kind, clip: it, dur: it.dur });
+    }
+    if (p.settings.outroText.trim()) list.push({ kind: 'outro', dur: 2.8 });
+  }
+  const starts = []; let t = 0;
+  for (const s of list) { starts.push(t); t += s.dur; }
+  segCache = { version: store.version, list, starts, total: t };
+  return segCache;
+}
+function totalDur() { return segments().total; }
+
+/* ---------- IndexedDB persistence ---------- */
+const DB_NAME = 'report-app', DB_VER = 1;
+let dbp = null;
+function db() {
+  if (!dbp) dbp = new Promise((res, rej) => {
+    const r = indexedDB.open(DB_NAME, DB_VER);
+    r.onupgradeneeded = () => {
+      const d = r.result;
+      if (!d.objectStoreNames.contains('projects')) d.createObjectStore('projects', { keyPath: 'id' });
+      if (!d.objectStoreNames.contains('assets')) d.createObjectStore('assets', { keyPath: 'id' });
+    };
+    r.onsuccess = () => res(r.result);
+    r.onerror = () => rej(r.error);
+  });
+  return dbp;
+}
+function tx(storeName, mode, fn) {
+  return db().then(d => new Promise((res, rej) => {
+    const t = d.transaction(storeName, mode);
+    const req = fn(t.objectStore(storeName));
+    t.oncomplete = () => res(req && req.result);
+    t.onerror = () => rej(t.error);
+  }));
+}
+async function putAssetRec(rec) { return tx('assets', 'readwrite', s => s.put(rec)); }
+async function delAssetRec(id) { return tx('assets', 'readwrite', s => s.delete(id)); }
+async function allAssets() { return tx('assets', 'readonly', s => s.getAll()); }
+async function allProjects() { return tx('projects', 'readonly', s => s.getAll()); }
+async function putProjectRec(rec) { return tx('projects', 'readwrite', s => s.put(rec)); }
+async function delProjectRec(id) { return tx('projects', 'readwrite', s => s.delete(id)); }
+
+const scheduleSave = debounce(async () => {
+  if (!store.project) return;
+  try {
+    await putProjectRec({ id: store.project.id, json: JSON.stringify(store.project), updatedAt: Date.now() });
+    document.dispatchEvent(new CustomEvent('app:saved'));
+  } catch (e) { console.warn('save failed', e); }
+}, 700);
+
+async function loadProjectById(id, assetRecords) {
+  const rec = await new Promise((res, rej) => db().then(d => {
+    const t = d.transaction('projects', 'readonly');
+    const r = t.objectStore('projects').get(id);
+    t.oncomplete = () => res(r.result);
+    t.onerror = () => rej(t.error);
+  }));
+  if (!rec) return null;
+  const p = JSON.parse(rec.json);
+  store.project = p; store.undoStack = []; store.redoStack = []; store.selectedId = null; store.version++;
+  // register asset records (runtime caches rebuilt lazily by media.js)
+  return p;
+}
+function assetRuntime(rec) {
+  if (store.media.has(rec.id)) return store.media.get(rec.id);
+  const a = { ...rec, url: null, bitmap: null, tinyBitmap: null, mirrorBitmap: null };
+  store.media.set(rec.id, a);
+  return a;
+}
+
+/* ---------- media.js ---------- */
+/* media.js — import, probing, bitmap caches, blur/mirror backgrounds, frame capture */
+
+
+
+const BITMAP_MAX = 1600;   // long edge of cached photo bitmap
+const TINY_W = 28;         // width of ultra-small bitmap used as cheap blur
+
+function loadImageEl(url) {
+  return new Promise((res, rej) => {
+    const img = new Image();
+    img.onload = () => res(img);
+    img.onerror = () => rej(new Error('image-decode'));
+    img.src = url;
+  });
+}
+function probeVideo(url) {
+  return new Promise((res, rej) => {
+    const v = document.createElement('video');
+    v.preload = 'metadata'; v.playsInline = true; v.muted = true;
+    const done = () => res({ w: v.videoWidth, h: v.videoHeight, dur: (isFinite(v.duration) && v.duration > 0) ? v.duration : 5, el: v });
+    v.onloadedmetadata = () => { v.currentTime = Math.min(0.1, (v.duration || 1) / 3); v.onseeked = done; setTimeout(done, 2500); };
+    v.onerror = () => rej(new Error('video-decode'));
+    setTimeout(() => rej(new Error('video-timeout')), 8000);
+    v.src = url;
+  });
+}
+function makeThumb(src, sw, sh) {
+  const c = document.createElement('canvas'); c.width = 160; c.height = 160;
+  const x = c.getContext('2d');
+  const s = Math.max(160 / (sw || 1), 160 / (sh || 1));
+  try { x.drawImage(src, (160 - sw * s) / 2, (160 - sh * s) / 2, sw * s, sh * s); return c.toDataURL('image/jpeg', 0.72); } catch (e) { return ''; }
+}
+async function photoBitmap(img) {
+  const long = Math.max(img.naturalWidth, img.naturalHeight);
+  const scale = Math.min(1, BITMAP_MAX / long);
+  if (scale >= 1 && 'createImageBitmap' in window) { try { return await createImageBitmap(img); } catch (e) {} }
+  const c = document.createElement('canvas');
+  c.width = Math.round(img.naturalWidth * scale); c.height = Math.round(img.naturalHeight * scale);
+  c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+  if ('createImageBitmap' in window) { try { return await createImageBitmap(c); } catch (e) {} }
+  return c;
+}
+function tinyOf(bitmapOrEl, w, h) { // ultra-small copy → drawn big = natural blur
+  const c = document.createElement('canvas'); c.width = TINY_W; c.height = Math.max(2, Math.round(TINY_W * h / w));
+  c.getContext('2d').drawImage(bitmapOrEl, 0, 0, c.width, c.height);
+  return c;
+}
+function ensureVideoTiny(a) { // lazily build blur backdrop source for a video asset
+  if (a.tinyBitmap || a.kind !== 'video' || !a.el) return a.tinyBitmap || null;
+  if (a.el.readyState >= 2 && a.el.videoWidth) {
+    try { a.tinyBitmap = tinyOf(a.el, a.w, a.h); } catch (e) {}
+  }
+  return a.tinyBitmap || null;
+}
+function mirrorOf(bitmapOrEl, w, h) {
+  const long = Math.max(w, h), scale = Math.min(1, 900 / long);
+  const c = document.createElement('canvas');
+  c.width = Math.max(2, Math.round(w * scale)); c.height = Math.max(2, Math.round(h * scale));
+  const x = c.getContext('2d');
+  x.translate(c.width, 0); x.scale(-1, 1);
+  x.drawImage(bitmapOrEl, 0, 0, c.width, c.height);
+  return c;
+}
+
+/** import a list of File objects; returns array of asset ids */
+async function importFiles(files, { silent = false } = {}) {
+  const ids = [];
+  for (const f of files) {
+    try {
+      const id = await importOne(f);
+      if (id) ids.push(id);
+    } catch (e) {
+      if (!silent) toast(`«${f.name}» خوانده نشد — فرمت یا کدک پشتیبانی نمی‌شود ❌`, 'err');
+      console.warn('import failed', f.name, e);
+    }
+  }
+  return ids;
+}
+async function importOne(f) {
+  const url = URL.createObjectURL(f);
+  if (f.type.startsWith('image/')) {
+    const img = await loadImageEl(url);
+    const a = assetRuntime({
+      id: uid('m'), kind: 'photo', name: f.name, type: f.type, size: f.size,
+      w: img.naturalWidth, h: img.naturalHeight, dur: 0, thumb: makeThumb(img, img.naturalWidth, img.naturalHeight),
+      blob: f,
+    });
+    a.url = url;
+    a.bitmap = await photoBitmap(img);
+    a.tinyBitmap = tinyOf(a.bitmap, a.w, a.h);
+    a.mirrorBitmap = mirrorOf(a.bitmap, a.w, a.h);
+    putAssetRec({ id: a.id, kind: a.kind, name: a.name, type: a.type, size: a.size, w: a.w, h: a.h, dur: 0, thumb: a.thumb, blob: f });
+    return a.id;
+  }
+  if (f.type.startsWith('video/')) {
+    const { w, h, dur, el } = await probeVideo(url);
+    el.muted = false; el.playsInline = true; el.preload = 'auto';
+    const a = assetRuntime({
+      id: uid('m'), kind: 'video', name: f.name, type: f.type, size: f.size,
+      w, h, dur, thumb: makeThumb(el, w, h), blob: f,
+    });
+    a.url = url; a.el = el;
+    try { a.tinyBitmap = tinyOf(el, w, h); } catch (e) {} /* el already seeked by probe → frame available */
+    a.el.addEventListener('loadeddata', () => {
+      if (!a.tinyBitmap) { try { a.tinyBitmap = tinyOf(a.el, w, h); } catch (e) {} }
+    });
+    putAssetRec({ id: a.id, kind: a.kind, name: a.name, type: a.type, size: a.size, w, h, dur, thumb: a.thumb, blob: f });
+    return a.id;
+  }
+  if (f.type.startsWith('audio/')) {
+    const el = new Audio(url); el.preload = 'metadata';
+    const dur = await new Promise(res => {
+      el.onloadedmetadata = () => res(isFinite(el.duration) ? el.duration : 0);
+      el.onerror = () => res(0);
+      setTimeout(() => res(0), 5000);
+    });
+    const rec = { id: uid('m'), kind: 'audio', name: f.name, type: f.type, size: f.size, w: 0, h: 0, dur, thumb: '', blob: f };
+    const a = assetRuntime(rec);
+    a.url = url; a.el = el;
+    putAssetRec(rec);
+    return a.id;
+  }
+  URL.revokeObjectURL(url);
+  throw new Error('unsupported-type');
+}
+
+/** rebuild runtime handles for an asset loaded from IndexedDB */
+async function hydrateAsset(a) {
+  if (a.url) return a;
+  const url = URL.createObjectURL(a.blob);
+  a.url = url;
+  try {
+    if (a.kind === 'photo') {
+      const img = await loadImageEl(url);
+      a.bitmap = await photoBitmap(img);
+      a.tinyBitmap = tinyOf(a.bitmap, a.w, a.h);
+      a.mirrorBitmap = mirrorOf(a.bitmap, a.w, a.h);
+    } else if (a.kind === 'video') {
+      const v = document.createElement('video');
+      v.src = url; v.playsInline = true; v.preload = 'auto';
+      v.addEventListener('loadeddata', () => { try { if (!a.tinyBitmap) a.tinyBitmap = tinyOf(v, a.w, a.h); } catch (e) {} });
+      a.el = v;
+    } else if (a.kind === 'audio') {
+      const el = new Audio(url); /* lane one-shots must not loop; exporter sets loop for background music */
+      a.el = el;
+    }
+  } catch (e) { console.warn('hydrate failed', a.name, e); }
+  return a;
+}
+
+/** capture a still from a video asset at time t → returns {file,w,h} */
+async function captureVideoFrame(asset, t) {
+  const v = document.createElement('video');
+  v.src = asset.url; v.muted = true; v.playsInline = true; v.preload = 'auto';
+  await new Promise((res, rej) => { v.onloadedmetadata = res; v.onerror = rej; setTimeout(rej, 6000); });
+  await new Promise((res, rej) => { v.currentTime = t; v.onseeked = res; setTimeout(rej, 4000); });
+  const c = document.createElement('canvas');
+  c.width = v.videoWidth; c.height = v.videoHeight;
+  c.getContext('2d').drawImage(v, 0, 0);
+  const blob = await new Promise(r => c.toBlob(r, 'image/jpeg', 0.92));
+  return new File([blob], (asset.name || 'frame') + '-فریم.jpg', { type: 'image/jpeg' });
+}
+function releaseAsset(a) {
+  try { if (a.url) URL.revokeObjectURL(a.url); } catch (e) {}
+  if (a.kind === 'video' && a.el) a.el.src = '';
+  if (a.kind === 'audio' && a.el) a.el.pause();
+  store.media.delete(a.id);
+}
+
+/* ---------- renderer.js ---------- */
+/* renderer.js — deterministic frame compositor: same code renders preview & export */
+
+
+
+
+let canvasCtxRef = null;   // ctx whose canvas we size-text on (per draw call, we use passed ctx)
+let fxParts = [], lastFxT = 0;
+
+function fontStr(kind, size) {
+  const f = FONTS[store.project?.settings.font] || FONTS.vazirmatn;
+  const w = kind === 'cap' ? f.weight : f.weight;
+  return `${w} ${size}px ${f.family}, Vazirmatn, Tahoma`;
+}
+function rr(x, y, w, h, r) {
+  const c = canvasCtxRef; c.beginPath();
+  c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r);
+  c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath();
+}
+function wrapLines(ctx, text, maxW) {
+  const words = String(text).split(/\s+/).filter(Boolean); const lines = []; let cur = '';
+  for (const w of words) {
+    const t = cur ? cur + ' ' + w : w;
+    if (ctx.measureText(t).width <= maxW || !cur) cur = t; else { lines.push(cur); cur = w; }
+  }
+  if (cur) lines.push(cur);
+  return lines;
+}
+function applyFilter(ctx, f) { if (f) { try { ctx.filter = f; } catch (e) {} } }
+function clearFilter(ctx, f) { if (f) { try { ctx.filter = 'none'; } catch (e) {} } }
+
+/* ---------- background fill modes (for fit/contain display) ---------- */
+function drawBackdrop(ctx, W, H, asset, mode, theme) {
+  const tiny = asset && (asset.tinyBitmap || ensureVideoTiny(asset));
+  if (mode === 'blur' && tiny) drawCover(ctx, W, H, tiny, asset.w, asset.h, 1.12, 0, 0);
+  else if (mode === 'darkblur' && tiny) {
+    drawCover(ctx, W, H, tiny, asset.w, asset.h, 1.12, 0, 0);
+    ctx.fillStyle = 'rgba(0,0,0,.42)'; ctx.fillRect(0, 0, W, H);
+  } else if (mode === 'lightblur' && tiny) {
+    drawCover(ctx, W, H, tiny, asset.w, asset.h, 1.12, 0, 0);
+    ctx.fillStyle = 'rgba(255,255,255,.30)'; ctx.fillRect(0, 0, W, H);
+  } else if (mode === 'mirror' && (asset && (asset.mirrorBitmap || tiny))) {
+    const src = asset.mirrorBitmap || asset.tinyBitmap;
+    drawCover(ctx, W, H, src, asset.w, asset.h, 1.06, 0, 0);
+    ctx.fillStyle = 'rgba(0,0,0,.18)'; ctx.fillRect(0, 0, W, H);
+  } else if (mode === 'solid') {
+    ctx.fillStyle = store.project.settings.bgColor; ctx.fillRect(0, 0, W, H);
+  } else { // gradient (theme)
+    const g = ctx.createLinearGradient(0, 0, W * 0.4, H);
+    theme.bg.forEach((c, i) => g.addColorStop(i / (theme.bg.length - 1), c));
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  }
+}
+function drawCover(ctx, W, H, src, sw, sh, scale = 1, panX = 0, panY = 0, rot = 0, alpha = 1) {
+  if (!src || !sw || !sh) return;
+  ctx.save();
+  if (alpha < 1) ctx.globalAlpha *= alpha;
+  ctx.translate(W / 2 + panX, H / 2 + panY);
+  if (rot) ctx.rotate(rot);
+  const s = Math.max(W / sw, H / sh) * scale;
+  ctx.drawImage(src, -sw * s / 2, -sh * s / 2, sw * s, sh * s);
+  ctx.restore();
+}
+function drawContain(ctx, W, H, src, sw, sh, scale = 1, panX = 0, panY = 0, rot = 0, alpha = 1) {
+  if (!src || !sw || !sh) return;
+  ctx.save();
+  if (alpha < 1) ctx.globalAlpha *= alpha;
+  ctx.translate(W / 2 + panX, H / 2 + panY);
+  if (rot) ctx.rotate(rot);
+  const s = Math.min(W / sw, H / sh) * scale;
+  ctx.drawImage(src, -sw * s / 2, -sh * s / 2, sw * s, sh * s);
+  ctx.restore();
+}
+
+/* ---------- motion (Ken Burns presets) ---------- */
+function motionTransform(seg, local, W, H) {
+  const st = store.project.settings;
+  const clip = seg.clip;
+  const mode = clip.motion || st.motion;
+  const k = st.motionIntensity || 1;
+  const p = clamp(0, 1, local / Math.max(seg.dur, 0.001));
+  let scale = 1.001, panX = 0, panY = 0, rot = 0;
+  const A = 0.14 * k, P = 0.045 * k * W;
+  let m = mode;
+  if (m === 'auto') m = (segIdx(seg) % 2 === 0) ? 'zoomin' : 'zoomout';
+  if (m === 'zoomin') scale = 1.03 + A * p;
+  else if (m === 'zoomout') scale = 1.03 + A * (1 - p);
+  else if (m === 'panlr') { scale = 1.03 + A; panX = (p - 0.5) * 2 * P; }
+  else if (m === 'panud') { scale = 1.03 + A; panY = (p - 0.5) * 2 * P; }
+  else if (m === 'cine') { scale = 1.02 + 0.09 * k * p; panX = (p - 0.5) * P * 0.6; panY = -(p - 0.5) * P * 0.4; }
+  // manual clip transforms on top
+  scale *= (clip.scale || 1);
+  panX += (clip.offsetX || 0) * W;
+  panY += (clip.offsetY || 0) * H;
+  rot = (clip.rotation || 0) * Math.PI / 180;
+  return { scale, panX, panY, rot };
+}
+let segIdxMap = null, segIdxVersion = -1;
+function segIdx(seg) {
+  const sg = segments();
+  if (segIdxVersion !== sg.version) {
+    segIdxMap = new Map(); sg.list.forEach((s, i) => segIdxMap.set(s, i)); segIdxVersion = sg.version;
+  }
+  return segIdxMap.get(seg) || 0;
+}
+
+/* ---------- text overlays ---------- */
+function drawCaption(ctx, W, H, clip, local) {
+  const st = store.project.settings, th = THEMES[st.theme] || THEMES.official;
+  const text = clip.caption; if (!text) return;
+  let fs = Math.round(W * 0.05 * (st.capSize || 1));
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  const maxW = W * 0.84;
+  const setF = () => ctx.font = fontStr('cap', fs); setF();
+  let lines = wrapLines(ctx, text, maxW);
+  while (lines.length > 3 && fs > W * 0.03) { fs -= 2; setF(); lines = wrapLines(ctx, text, maxW); }
+  const lh = fs * 1.45, padX = fs * 0.75, padY = fs * 0.5;
+  const wMax = Math.max(...lines.map(l => ctx.measureText(l).width));
+  const bw = Math.min(maxW, wMax) + padX * 2, bh = lines.length * lh + padY * 2;
+  const pos = st.textPos || 'bottom';
+  const bx = (W - bw) / 2;
+  const by = pos === 'top' ? H * 0.13 : pos === 'middle' ? (H - bh) / 2 + H * 0.04 : H - bh - H * 0.075;
+  const pop = easeOutBack(clamp(0, 1, local / 0.35));
+  ctx.save();
+  ctx.translate(W / 2, by + bh / 2); ctx.scale(pop, pop); ctx.translate(-W / 2, -(by + bh / 2));
+  ctx.shadowColor = 'rgba(0,0,0,.22)'; ctx.shadowBlur = 12;
+  ctx.fillStyle = th.capBg; rr(bx, by, bw, bh, fs * 0.6); ctx.fill();
+  ctx.shadowBlur = 0; ctx.fillStyle = '#fff';
+  lines.forEach((l, i) => ctx.fillText(l, W / 2, by + padY + lh * (i + 0.5)));
+  ctx.restore();
+}
+function drawSub(ctx, W, H, clip, local) {
+  const text = clip.sub; if (!text) return;
+  const st = store.project.settings;
+  let fs = Math.round(W * 0.036);
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  const maxW = W * 0.8;
+  const setF = () => ctx.font = fontStr('cap', fs); setF();
+  let lines = wrapLines(ctx, text, maxW);
+  while (lines.length > 2 && fs > W * 0.024) { fs -= 2; setF(); lines = wrapLines(ctx, text, maxW); }
+  const lh = fs * 1.4;
+  const pos = st.textPos || 'bottom';
+  const y = pos === 'top' ? H * 0.13 : pos === 'middle' ? H / 2 + H * 0.1 : H - H * 0.045;
+  ctx.save();
+  ctx.font = fontStr('cap', fs);
+  ctx.shadowColor = 'rgba(0,0,0,.55)'; ctx.shadowBlur = 8;
+  ctx.fillStyle = '#fff';
+  lines.forEach((l, i) => {
+    const yy = pos === 'top' ? y + i * lh : y - (lines.length - 1 - i) * lh;
+    ctx.fillText(l, W / 2, yy);
+  });
+  ctx.restore();
+}
+function drawSticker(ctx, W, H, clip, local) {
+  if (!clip.sticker) return;
+  const pop = easeOutBack(clamp(0, 1, local / 0.35));
+  ctx.save();
+  ctx.translate(W * 0.84, H * 0.16 + Math.sin(local * 3) * 6);
+  ctx.rotate(-0.15); ctx.scale(pop, pop);
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.font = `${Math.round(W * 0.12)}px serif`;
+  ctx.shadowColor = 'rgba(0,0,0,.25)'; ctx.shadowBlur = 10;
+  ctx.fillText(clip.sticker, 0, 0);
+  ctx.restore();
+}
+function drawTitleSlide(ctx, W, H, local, isOutro) {
+  const st = store.project.settings, th = THEMES[st.theme] || THEMES.official;
+  const pop = easeOutBack(clamp(0, 1, local / 0.55));
+  ctx.save();
+  ctx.translate(W / 2, H / 2); ctx.scale(pop, pop);
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  const emoji = isOutro ? '🎬' : th.emoji[0];
+  ctx.font = `${Math.round(W * 0.13)}px serif`;
+  ctx.fillText(emoji, 0, -H * 0.155);
+  const main = isOutro ? st.outroText : st.titleText;
+  let fs = Math.round(W * (isOutro ? 0.075 : 0.082));
+  const setF = () => ctx.font = fontStr('cap', fs); setF();
+  let lines = wrapLines(ctx, main.trim(), W * 0.82);
+  while (lines.length > 3 && fs > W * 0.05) { fs -= 2; setF(); lines = wrapLines(ctx, main.trim(), W * 0.82); }
+  const lh = fs * 1.5;
+  ctx.shadowColor = 'rgba(0,0,0,.35)'; ctx.shadowBlur = 16; ctx.fillStyle = '#fff';
+  lines.forEach((l, i) => ctx.fillText(l, 0, (i - (lines.length - 1) / 2) * lh));
+  if (!isOutro && (st.schoolName || st.reportDate)) {
+    let fs2 = Math.round(W * 0.042);
+    ctx.font = fontStr('cap', fs2); ctx.shadowBlur = 10; ctx.globalAlpha = 0.95;
+    const sub = [st.schoolName, st.reportDate].filter(Boolean).join('  •  ');
+    ctx.fillText(sub, 0, (lines.length - 1) / 2 * lh + fs2 * 2.1);
+  }
+  ctx.restore();
+}
+function drawHeaderFooter(ctx, W, H, clip) {
+  const st = store.project.settings;
+  const pick = v => (v === undefined || v === null) ? null : v;
+  const hOverride = clip ? pick(clip.headerText) : null;
+  const fOverride = clip ? pick(clip.footerText) : null;
+  const hText = hOverride !== null ? hOverride : st.headerText;
+  const fText = fOverride !== null ? fOverride : st.footerText;
+  const bar = (text, top) => {
+    const fs = Math.round(W * 0.037), h = fs * 2.1;
+    ctx.save();
+    ctx.fillStyle = 'rgba(5,15,35,.55)'; ctx.fillRect(0, top ? 0 : H - h, W, h);
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.font = fontStr('cap', fs); ctx.fillStyle = '#fff';
+    ctx.fillText(text, W / 2, top ? h / 2 : H - h / 2);
+    ctx.restore();
+  };
+  if (hText && hText.trim()) bar(hText, true);
+  if (fText && fText.trim()) bar(fText, false);
+}
+/* متنی که در زمان مشخصی از تایم‌لاین نوشته می‌شود — با انیمیشن */
+function drawTextOverlays(ctx, W, H, t) {
+  const texts = store.project.texts || [];
+  for (const tx of texts) {
+    if (!tx || t < tx.start || t > tx.start + tx.dur) continue;
+    const local = t - tx.start;
+    const eIn = clamp(0, 1, local / 0.4);
+    const eOut = clamp(0, 1, (tx.dur - local) / 0.35);
+    let alpha = eOut, dx = 0, scale = 1, sub = null;
+    if (tx.anim === 'fade') alpha = Math.min(eIn, eOut);
+    else if (tx.anim === 'pop') { scale = easeOutBack(eIn); }
+    else if (tx.anim === 'slide') { dx = (1 - easeOutBack(eIn)) * W * 0.28; }
+    else if (tx.anim === 'type') {
+      const tp = clamp(0, 1, local / Math.max(0.5, tx.dur * 0.55));
+      sub = String(tx.text).slice(0, Math.ceil(tp * String(tx.text).length));
+    }
+    let fs = Math.round(W * 0.045 * (tx.size || 1));
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.translate(dx, 0); if (scale !== 1) { ctx.translate(W / 2, H / 2); ctx.scale(scale, scale); ctx.translate(-W / 2, -H / 2); }
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    const maxW = W * 0.82;
+    const setF = () => ctx.font = fontStr('cap', fs); setF();
+    let lines = wrapLines(ctx, sub !== null ? sub : tx.text, maxW);
+    while (lines.length > 3 && fs > W * 0.03) { fs -= 2; setF(); lines = wrapLines(ctx, sub !== null ? sub : tx.text, maxW); }
+    const lh = fs * 1.5;
+    const pos = tx.pos || 'bottom';
+    const cy = pos === 'top' ? H * 0.2 : pos === 'middle' ? H / 2 : H * 0.68; /* bottom = above the caption pill zone */
+    ctx.fillStyle = tx.color || '#fff';
+    ctx.shadowColor = 'rgba(0,0,0,.6)'; ctx.shadowBlur = 10;
+    lines.forEach((l, i) => ctx.fillText(l, W / 2, cy + (i - (lines.length - 1) / 2) * lh));
+    if (tx.anim === 'type' && local < tx.dur * 0.7 && Math.sin(t * 9) > 0 && lines.length) {
+      const last = lines[lines.length - 1];
+      const w = ctx.measureText(last).width;
+      ctx.fillText('▌', W / 2 + w / 2 + fs * 0.3, cy + (lines.length - 1) / 2 * lh);
+    }
+    ctx.restore();
+  }
+}
+function drawLogo(ctx, W, H) {
+  const st = store.project.settings;
+  const logo = st.logoId && store.media.get(st.logoId);
+  if (!logo) return;
+  ensureBitmap(logo);
+  const src = logo.bitmap || logo.el;
+  if (!src) return;
+  const iw = logo.w || 1, ih = logo.h || 1;
+  const target = Math.min(W, H) * (st.logoSize || 0.14);
+  const s = target / Math.max(iw, ih);
+  const dw = iw * s, dh = ih * s;
+  const pad = W * 0.035;
+  const pos = st.logoPos || 'tl';
+  const x = (pos.includes('l') ? pad : W - pad - dw);
+  const y = (pos.startsWith('t') ? pad : H - pad - dh);
+  ctx.save(); ctx.globalAlpha = st.logoOpacity ?? 0.9;
+  ctx.drawImage(src, x, y, dw, dh);
+  ctx.restore();
+}
+function ensureBitmap(a) {
+  if (a.bitmap || a.el) return;
+  if (a.url && a.kind === 'photo') {
+    const img = new Image(); img.src = a.url;
+    img.decode().then(() => { a.bitmap = img; }).catch(() => {});
+  }
+}
+function drawFx(ctx, W, H, t) {
+  const st = store.project.settings;
+  const th = THEMES[st.theme] || THEMES.official;
+  const dt = clamp(0.001, 0.06, t - lastFxT); lastFxT = t;
+  if (fxParts.length < 18 && Math.random() < dt * 7)
+    fxParts.push({ x: Math.random() * W, y: H + 40, vy: -(H * 0.07 + Math.random() * H * 0.05),
+      e: th.emoji[(Math.random() * th.emoji.length) | 0], sz: W * (0.035 + Math.random() * 0.03),
+      r: Math.random() * 6.28, vr: (Math.random() - 0.5) * 2, sw: Math.random() * 40 + 8 });
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  for (const p of fxParts) {
+    p.y += p.vy * dt; p.r += p.vr * dt;
+    const x = p.x + Math.sin(t * 1.5 + p.r) * p.sw * 0.25;
+    ctx.save(); ctx.globalAlpha = 0.85; ctx.translate(x, p.y); ctx.rotate(p.r);
+    ctx.font = `${p.sz}px serif`; ctx.fillText(p.e, 0, 0); ctx.restore();
+  }
+  fxParts = fxParts.filter(p => p.y > -60);
+}
+
+/* ---------- main entry ---------- */
+function renderFrame(ctx, W, H, t, { quiet = false } = {}) {
+  canvasCtxRef = ctx;
+  const proj = store.project;
+  const th = THEMES[proj.settings.theme] || THEMES.official;
+  // base background
+  const g = ctx.createLinearGradient(0, 0, W * 0.4, H);
+  th.bg.forEach((c, i) => g.addColorStop(i / (th.bg.length - 1), c));
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  const sg = segments();
+  if (!sg.list.length) { lastFxT = t; return; }
+  let i = sg.list.length - 1;
+  for (let k = 0; k < sg.list.length; k++) { if (t < sg.starts[k] + sg.list[k].dur) { i = k; break; } }
+  const seg = sg.list[i], local = t - sg.starts[i], dur = seg.dur;
+  const st = proj.settings;
+  const TD = st.transDur || 0.5;
+  let next = null, p = 0;
+  if (local > dur - TD && i < sg.list.length - 1) { next = sg.list[i + 1]; p = clamp(0, 1, (local - (dur - TD)) / TD); }
+
+  drawSeg(ctx, W, H, seg, local, th, 1);
+
+  if (next && p > 0 && st.transition !== 'cut' && st.transition !== 'none') {
+    ctx.save();
+    const tr = st.transition;
+    if (tr === 'fade' || tr === 'blur') ctx.globalAlpha = p;
+    else if (tr === 'zoom') { ctx.globalAlpha = p; const z = 1 + 0.28 * (1 - p); ctx.translate(W / 2, H / 2); ctx.scale(z, z); ctx.translate(-W / 2, -H / 2); }
+    else if (tr === 'slide') ctx.translate(-(1 - p) * W, 0);
+    else if (tr === 'bounce') ctx.translate(-(1 - easeOutBack(p)) * W, 0);
+    else if (tr === 'spin') { ctx.globalAlpha = p; ctx.translate(W / 2, H / 2); ctx.rotate((1 - p) * -0.35); const z = 1 + 0.4 * (1 - p); ctx.scale(z, z); ctx.translate(-W / 2, -H / 2); }
+    else if (tr === 'push') { /* both move */ }
+    else if (tr === 'wipe') { ctx.beginPath(); ctx.rect(W - W * p, 0, W * p, H); ctx.clip(); }
+    if (tr === 'blur') { try { ctx.filter = `blur(${((1 - p) * 12).toFixed(1)}px)`; } catch (e) {} }
+    if (tr === 'push') {
+      ctx.restore();
+      ctx.save(); ctx.translate(p * W, 0); drawSeg(ctx, W, H, seg, local, th, 1); ctx.restore();
+      ctx.save(); ctx.translate(-(1 - p) * W, 0); drawSeg(ctx, W, H, next, 0, th, 1); ctx.restore();
+    } else {
+      drawSeg(ctx, W, H, next, 0, th, 1);
+      ctx.restore();
+      if (next.clip) { /* captions of next drawn sharp */ }
+    }
+  }
+  // global overlays (always on top, never transitioned)
+  drawHeaderFooter(ctx, W, H, seg.clip || null);
+  drawTextOverlays(ctx, W, H, t);
+  drawLogo(ctx, W, H);
+  if (st.fx) drawFx(ctx, W, H, t);
+  else lastFxT = t;
+}
+function drawSeg(ctx, W, H, seg, local, th, alpha) {
+  const st = store.project.settings;
+  if (seg.kind === 'title') { drawTitleSlide(ctx, W, H, local, false); return; }
+  if (seg.kind === 'outro') { drawTitleSlide(ctx, W, H, local, true); return; }
+  const clip = seg.clip;
+  const asset = clip.srcId ? store.media.get(clip.srcId) : null;
+  if (!asset) return;
+  const src = asset.bitmap || asset.el;
+  if (!src) return;
+  const filterKey = clip.filter || st.filter || 'none';
+  const filterCss = FILTER_PRESETS[filterKey] || '';
+  const mt = motionTransform(seg, local, W, H);
+  const fit = clip.fit || st.fitDefault;
+  const bg = clip.bg || st.bgDefault;
+  applyFilter(ctx, filterCss);
+  if (fit === 'fit') drawBackdrop(ctx, W, H, asset, bg, th);
+  if (fit === 'fit') drawContain(ctx, W, H, src, asset.w, asset.h, mt.scale, mt.panX, mt.panY, mt.rot, alpha);
+  else drawCover(ctx, W, H, src, asset.w, asset.h, mt.scale, mt.panX, mt.panY, mt.rot, alpha);
+  clearFilter(ctx, filterCss);
+  if (clip.caption) drawCaption(ctx, W, H, clip, local);
+  if (clip.sub) drawSub(ctx, W, H, clip, local);
+  if (clip.sticker) drawSticker(ctx, W, H, clip, local);
+}
+function resetFx() { fxParts = []; lastFxT = 0; }
+
+/* ---------- audio.js ---------- */
+/* audio.js — WebAudio graph: video sounds, background music, fades */
+
+
+let AC = null, streamDest = null, master = null;
+const wired = new WeakMap();   // el -> gain
+const allGains = [];
+
+function initAudio() {
+  if (AC) return true;
+  try { AC = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return false; }
+  master = AC.createGain();
+  streamDest = AC.createMediaStreamDestination();
+  master.connect(AC.destination);
+  master.connect(streamDest);
+  return true;
+}
+function audioCtx() { return AC; }
+function streamDestination() { return streamDest; }
+function wireElement(el) {
+  if (!AC || !el || wired.has(el)) return null;
+  try {
+    const src = AC.createMediaElementSource(el);
+    const g = AC.createGain(); g.gain.value = 0;
+    src.connect(g); g.connect(master);
+    wired.set(el, g); allGains.push(g);
+    return g;
+  } catch (e) { return null; }
+}
+function resumeAudio() { if (AC && AC.state === 'suspended') AC.resume().catch(() => {}); }
+function setAudible(on) {
+  allGains.forEach(g => { try { g.gain.value = on ? 1 : 0; } catch (e) {} });
+  musicGainTick();
+}
+function musicGainTick() {
+  // music element gain handled via wireElement gain; apply volume + fades here
+  const el = musicEl();
+  if (!el) return;
+  const g = wired.get(el);
+  if (!g) return;
+  const st = store.project.settings;
+  let v = exporting() ? (st.musicVol ?? 0.8) : 0;
+  if (exporting() && st.musicFade) {
+    const { totalDur, playhead } = engineRef();
+    const remain = totalDur - playhead;
+    v *= clamp01(remain / 1.5);           // fade out
+    v *= clamp01(playhead / 0.8);         // fade in
+  }
+  try { g.gain.value = v; } catch (e) {}
+}
+function clamp01(x) { return Math.max(0, Math.min(1, x)); }
+let _exporting = () => false, _engineRef = () => ({ totalDur: 0 });
+function bindExportFlags(exportingFn, engineRefFn) { _exporting = exportingFn; _engineRef = engineRefFn; }
+function exporting() { return _exporting(); }
+function engineRef() { return _engineRef(); }
+function musicEl() {
+  const id = store.project?.settings.musicId;
+  const a = id && store.media.get(id);
+  return a && a.el ? a.el : null;
+}
+
+/* ---------- engine.js ---------- */
+/* engine.js — playback loop, video element scheduling with trim/speed, seek */
+
+
+
+
+const engine = {
+  playing: false, playhead: 0, t0: 0, exporting: false, onEnd: null,
+  loopToken: 0, scheduled: false, rafId: 0,
+  onTick: null,           // ui progress hook
+};
+
+function activeVideoEls(main, next, wantNext) {
+  const want = new Set();
+  if (main && main.kind === 'video') want.add(main);
+  if (wantNext && next && next.kind === 'video') want.add(next);
+  const sg = segments();
+  for (const seg of sg.list) {
+    if (seg.kind !== 'video') continue;
+    const a = store.media.get(seg.clip.srcId);
+    if (!a || !a.el) continue;
+    const el = a.el;
+    if (want.has(seg)) {
+      const clip = seg.clip;
+      if (el.paused) {
+        const srcStart = clip.srcStart || 0;
+        if (!seg._started) {
+          try { el.currentTime = srcStart + (seg === main ? Math.max(0, engine.playhead - segStart(seg)) : 0) * (clip.speed || 1); } catch (e) {}
+          seg._started = true;
+        }
+        el.playbackRate = clip.speed || 1;
+        el.muted = false;
+        el.volume = 1;
+        el.play().catch(() => {});
+      }
+    } else if (!el.paused) el.pause();
+  }
+}
+function segStart(seg) {
+  const sg = segments();
+  const i = sg.list.indexOf(seg);
+  return i >= 0 ? sg.starts[i] : 0;
+}
+function scheduleNext(token) {
+  if (engine.scheduled) return;
+  engine.scheduled = true;
+  const fire = () => { engine.scheduled = false; if (token !== engine.loopToken || !engine.playing) return; frame(performance.now()); };
+  if (document.hidden) setTimeout(fire, 1000 / 30);
+  else engine.rafId = requestAnimationFrame(fire);
+}
+function frame(now) {
+  if (!engine.playing) return;
+  const t = (now - engine.t0) / 1000;
+  if (t >= totalDur()) { engine.playhead = totalDur(); paint(); pause(); const f = engine.onEnd; engine.onEnd = null; if (f) f(); return; }
+  engine.playhead = t;
+  paint();
+  scheduleNext(engine.loopToken);
+}
+function paint() {
+  const cv = engine.canvas;
+  if (!cv) return;
+  const ctx = cv.getContext('2d');
+  renderFrame(ctx, cv.width, cv.height, engine.playhead);
+  if (engine.exportCanvas) {
+    const iv = engine.exportFps ? 1000 / engine.exportFps : 0;
+    const now = performance.now();
+    if (!iv || now - (engine._lastExpPaint || 0) >= iv - 4) {
+      engine._lastExpPaint = now;
+      const ec = engine.exportCanvas;
+      renderFrame(ec.getContext('2d'), ec.width, ec.height, engine.playhead);
+      engine.onExportFrame && engine.onExportFrame();
+    }
+  }
+  const sg = segments();
+  // video scheduling
+  let i = sg.list.length - 1;
+  for (let k = 0; k < sg.list.length; k++) { if (engine.playhead < sg.starts[k] + sg.list[k].dur) { i = k; break; } }
+  const seg = sg.list[i];
+  const p = seg && (engine.playhead - sg.starts[i]) > seg.dur - (store.project.settings.transDur || 0.5);
+  const next = p && i < sg.list.length - 1 ? sg.list[i + 1] : null;
+  activeVideoEls(seg, next, p);
+  scheduleAudioClips();
+  if (engine.exporting) musicGainTick();
+  if (engine.onTick) engine.onTick(engine.playhead);
+}
+/* audio-lane: multiple one-shot sounds, each with its own start point */
+function scheduleAudioClips() {
+  const p = store.project;
+  const lane = p && p.audio;
+  if (!lane || !lane.length) return;
+  for (const a of lane) {
+    const m = store.media.get(a.srcId);
+    if (!m || !m.el) continue;
+    const el = m.el;
+    const active = engine.playing && engine.playhead >= a.startAt && engine.playhead < a.startAt + a.dur;
+    const g = gainsByEl.get(el);
+    if (active) {
+      if (el.paused) { try { el.currentTime = engine.playhead - a.startAt; } catch (e) {} el.play().catch(() => {}); }
+      if (g) {
+        const fade = 0.4;
+        const mul = Math.min(1, (engine.playhead - a.startAt) / fade, (a.startAt + a.dur - engine.playhead) / fade);
+        try { g.gain.value = (a.volume ?? 1) * Math.max(0, mul); } catch (e) {}
+      }
+    } else {
+      if (!el.paused) el.pause();
+      if (g && g.gain.value !== 0) { try { g.gain.value = 0; } catch (e) {} }
+    }
+  }
+}
+function attachCanvas(cv) { engine.canvas = cv; }
+function forceEnd() { const f = engine.onEnd; engine.onEnd = null; if (f) f(); }
+function play() {
+  if (engine.exporting || engine.playing) return;
+  if (totalDur() <= 0) return;
+  initAudio(); resumeAudio();
+  unlockAll();
+  if (engine.playhead >= totalDur() - 0.01) { engine.playhead = 0; restartAll(); }
+  engine.playing = true;
+  engine.t0 = performance.now() - engine.playhead * 1000;
+  engine.loopToken++; scheduleNext(engine.loopToken);
+}
+function pause() {
+  engine.playing = false;
+  cancelAnimationFrame(engine.rafId);
+  const sg = segments();
+  for (const seg of sg.list) {
+    if (seg.kind !== 'video') continue;
+    const a = store.media.get(seg.clip.srcId);
+    if (a && a.el && !a.el.paused) a.el.pause();
+  }
+  const lane = store.project && store.project.audio;
+  if (lane) for (const a of lane) { const m = store.media.get(a.srcId); if (m && m.el && !m.el.paused) m.el.pause(); }
+  const m = musicEl(); if (m && !m.paused) m.pause();
+}
+function seek(t) {
+  engine.playhead = Math.max(0, Math.min(totalDur(), t));
+  restartAll();
+  paint();
+}
+function restartAll() {
+  const sg = segments();
+  for (const seg of sg.list) {
+    seg._started = false;
+    if (seg.kind === 'video') {
+      const a = store.media.get(seg.clip.srcId);
+      if (a && a.el) { try { a.el.currentTime = seg.clip.srcStart || 0; } catch (e) {} }
+    }
+  }
+}
+function resetPlayhead() { engine.playhead = 0; restartAll(); paint(); }
+async function unlockAll() {
+  const sg = segments();
+  const els = [];
+  for (const seg of sg.list) if (seg.kind === 'video') { const a = store.media.get(seg.clip.srcId); if (a && a.el) els.push(a.el); }
+  const lane = store.project && store.project.audio;
+  if (lane) for (const a of lane) { const m = store.media.get(a.srcId); if (m && m.el) els.push(m.el); }
+  const m = musicEl(); if (m) { wireElement(m); els.push(m); }
+  for (const el of els) { wireElement(el); try { el.muted = false; await el.play(); el.pause(); } catch (e) {} }
+}
+/* start playback-driven export; resolves when timeline finishes */
+function runTo(onEnd) {
+  return new Promise(res => {
+    engine.onEnd = () => { const f = onEnd; f && f(); res(); };
+    engine.playing = true;
+    engine.t0 = performance.now();
+    engine.loopToken++; scheduleNext(engine.loopToken);
+  });
+}
+
+/* ---------- exporter.js ---------- */
+/* exporter.js — canvas recorder with resolution/fps/quality presets */
+
+
+
+
+
+const QUALITIES = {
+  normal: { name: 'معمولی', mul: 1 },
+  high: { name: 'کیفیت بالا', mul: 1.8 },
+  social: { name: 'شبکه اجتماعی', mul: 0.8 },
+  small: { name: 'حجم کم', mul: 0.45 },
+};
+const BASE_DIMS = { '9:16': [1080, 1920], '1:1': [1080, 1080], '16:9': [1920, 1080], '4:5': [1080, 1350], '4:3': [1440, 1080] };
+function baseDims() {
+  const st = store.project.settings;
+  if (st.aspect === 'custom' && st.customW > 0 && st.customH > 0) return [st.customW, st.customH];
+  return BASE_DIMS[st.aspect] || [1080, 1920];
+}
+function previewDims() {
+  const [W, H] = baseDims();
+  const scale = Math.min(1, 860 / Math.max(W, H));
+  return [Math.round(W * scale), Math.round(H * scale)];
+}
+function exportDims(resMin) {
+  const [W, H] = baseDims();
+  const scale = resMin / Math.min(W, H);
+  return { W: Math.round(W * scale / 2) * 2, H: Math.round(H * scale / 2) * 2 };
+}
+function bitrateFor(W, H, fps, quality) {
+  const base = W * H * fps * 0.09;
+  return Math.round(Math.min(40e6, Math.max(2.5e6, base * (QUALITIES[quality]?.mul || 1))));
+}
+/* ---------- target-size mode: pick res/fps/bitrate to hit a file size ---------- */
+const SIZE_LADDER = [];
+for (const r of [1080, 720, 480]) for (const f of [30, 25, 24]) SIZE_LADDER.push({ resMin: r, fps: f });
+const AUDIO_KBPS = 128;
+function computeForSize(targetMB) {
+  const dur = Math.max(0.5, segments().total);
+  const totalBits = targetMB * 1048576 * 8;
+  const videoBps = Math.max(150000, (totalBits - AUDIO_KBPS * 1000 * dur) / dur);
+  let best = null;
+  for (const { resMin, fps } of SIZE_LADDER) {
+    const { W, H } = exportDims(resMin);
+    const bpp = videoBps / (W * H * fps);
+    if (bpp >= 0.07) { best = { resMin, fps, bpp, level: 'good' }; break; }
+  }
+  if (!best) {
+    for (const { resMin, fps } of SIZE_LADDER) {
+      const { W, H } = exportDims(resMin);
+      const bpp = videoBps / (W * H * fps);
+      if (!best || bpp > best.bpp) best = { resMin, fps, bpp };
+    }
+    best.level = best.bpp >= 0.04 ? 'ok' : 'low';
+  }
+  return { ...best, videoBps, dur, estMB: targetMB };
+}
+function pickMime() {
+  const cands = ['video/mp4;codecs=avc1.42E01E,mp4a.40.2', 'video/mp4',
+    'video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8,opus', 'video/webm'];
+  for (const c of cands) { try { if (MediaRecorder.isTypeSupported(c)) return c; } catch (e) {} }
+  return '';
+}
+async function preloadFonts() {
+  if (!document.fonts || !document.fonts.load) return;
+  try { await Promise.all([document.fonts.load('800 60px Vazirmatn'), document.fonts.load('400 60px Lalezar')]); } catch (e) {}
+}
+
+let cancelRequested = false;
+function cancelExport() { cancelRequested = true; forceEnd(); }
+
+async function exportVideo({ resMin = 1080, fps = 30, quality = 'normal', bitrate = 0 } = {}) {
+  if (!store.project) throw new Error('no-project');
+  if (segments().total <= 0) throw new Error('empty');
+  if (!window.MediaRecorder) throw new Error('no-recorder');
+  cancelRequested = false;
+  const { W, H } = exportDims(resMin);
+  const vBitrate = bitrate > 0 ? Math.round(bitrate) : bitrateFor(W, H, fps, quality);
+  const cv = document.createElement('canvas');
+  cv.width = W; cv.height = H;
+  const ctx = cv.getContext('2d');
+  try { ctx.direction = 'rtl'; } catch (e) {}
+  pause(); engine.exporting = true; engine.playhead = 0;
+  engine.exportCanvas = cv; engine.exportFps = fps;
+  resetFx(); restartAll();
+  renderFrame(ctx, W, H, 0);
+  let captureTrack = null;
+  engine.onExportFrame = () => { if (captureTrack) { try { captureTrack.requestFrame(); } catch (e) {} } };
+  initAudio(); resumeAudio();
+  // unlock media elements inside this user-gesture call stack
+  const sg = segments();
+  for (const seg of sg.list) {
+    if (seg.kind !== 'video') continue;
+    const a = store.media.get(seg.clip.srcId);
+    if (a && a.el) { try { a.el.muted = false; await a.el.play(); a.el.pause(); } catch (e) {} }
+  }
+  const lane = store.project.audio || [];
+  for (const a of lane) {
+    const m = store.media.get(a.srcId);
+    if (m && m.el) { wireElement(m.el); try { m.el.muted = false; await m.el.play(); m.el.pause(); } catch (e) {} }
+  }
+  const m = musicEl();
+  if (m) { try { m.muted = false; m.loop = true; await m.play(); m.pause(); m.currentTime = 0; } catch (e) {} }
+  await preloadFonts();
+  let stream;
+  try {
+    stream = cv.captureStream(0);
+    const tr = stream.getVideoTracks()[0];
+    if (tr && typeof tr.requestFrame === 'function') captureTrack = tr;
+    else stream = cv.captureStream(fps);
+  } catch (e) { stream = cv.captureStream(fps); }
+  const sd = streamDestination();
+  if (sd) sd.stream.getAudioTracks().forEach(t => stream.addTrack(t));
+  const mime = pickMime();
+  const rec = new MediaRecorder(stream, { mimeType: mime || undefined, videoBitsPerSecond: vBitrate, audioBitsPerSecond: AUDIO_KBPS * 1000 });
+  const chunks = [];
+  rec.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
+  const stopped = new Promise(r => rec.onstop = r);
+  const total = segments().total;
+  setAudible(true);
+  rec.start(250);
+  if (m) { try { m.currentTime = 0; m.play(); } catch (e) {} }
+  engine.onExportFrame();
+  await runTo(() => {});
+  await new Promise(r => setTimeout(r, 220));
+  engine.onExportFrame();
+  rec.stop(); await stopped;
+  if (m) m.pause();
+  engine.exporting = false; engine.exportCanvas = null; engine.onExportFrame = null; engine.exportFps = 0;
+  setAudible(false);
+  if (cancelRequested) { chunks.length = 0; throw new Error('cancelled'); }
+  const blob = new Blob(chunks, { type: rec.mimeType || 'video/webm' });
+  chunks.length = 0;
+  const ext = (blob.type || '').includes('mp4') ? 'mp4' : 'webm';
+  return { blob, ext, W, H, dur: total };
+}
+
+/* ---------- ui.js ---------- */
+/* ui.js — all screens, timeline cards, library, wizard, settings, export flow, shortcuts */
+
+
+
+
+
+
+
+
+bindExportFlags(() => engine.exporting, () => ({ totalDur: totalDur(), playhead: engine.playhead }));
+
+let expRes = 1080, expFps = 30, expQ = 'normal';
+let expMode = 'quality', expSizeMB = 15;
+let lastAspectKey = '';
+
+/* ================= boot & screens ================= */
+function initUI() {
+  attachCanvas($('#cv'));
+  engine.onTick = t => {
+    const tot = totalDur() || 0.001;
+    $('#pbFill').style.width = (t / tot * 100).toFixed(1) + '%';
+    $('#timeLbl').textContent = `${t.toFixed(1)} / ${tot.toFixed(1)} ثانیه`;
+    const ph = $('#tlPH');
+    if (ph && mtlPx > 0) { ph.style.display = 'block'; ph.style.left = (t * mtlPx) + 'px'; }
+    if (engine.exporting) {
+      $('#exFill').style.width = (t / tot * 100).toFixed(1) + '%';
+      $('#exText').textContent = `در حال ساخت… ${Math.round(t / tot * 100)}٪`;
+    }
+  };
+  document.addEventListener('app:saved', () => {
+    const d = $('#saveDot'); if (!d) return;
+    d.textContent = '✅'; d.classList.add('ok');
+    setTimeout(() => { d.textContent = '💾'; d.classList.remove('ok'); }, 1200);
+  });
+  onChange(() => renderAll());
+  wireGlobalControls();
+  wireShortcuts();
+  window.addEventListener('resize', debounceResize);
+  renderAll();
+}
+const debounceResize = (() => { let t; return () => { clearTimeout(t); t = setTimeout(sizeCanvas, 200); }; })();
+
+function showScreen(which) {
+  $('#scrHome').hidden = which !== 'home';
+  $('#scrEdit').hidden = which !== 'edit';
+}
+async function openProject(p, assets) {
+  store.project = p;
+  if (!p.audio) p.audio = [];
+  if (!p.texts) p.texts = [];
+  store.undoStack = []; store.redoStack = []; store.selectedId = null; store.version++;
+  if (assets) for (const rec of assets) { assetRuntime(rec); await hydrateAsset(assetRuntime(rec)); }
+  lastAspectKey = '';
+  try { localStorage.setItem('report-app:last', p.id); } catch (e) {}
+  scheduleSave();
+  showScreen('edit');
+  renderAll();
+  resetPlayhead();
+}
+function closeToHome() {
+  engine.pause();
+  showScreen('home');
+  renderProjectList();
+}
+async function startNewProject(name) {
+  const p = newProject(name || ('گزارش ' + ORG_NAME));
+  await openProject(p, []);
+}
+async function openProjectById(id) {
+  const recs = await allProjects();
+  const rec = recs.find(r => r.id === id);
+  if (!rec) return toast('پروژه پیدا نشد', 'err');
+  const p = JSON.parse(rec.json);
+  const assetRecs = await allAssets();
+  const need = new Set();
+  p.items.forEach(it => it.srcId && need.add(it.srcId));
+  (p.audio || []).forEach(a => a.srcId && need.add(a.srcId));
+  if (p.settings.musicId) need.add(p.settings.musicId);
+  if (p.settings.logoId) need.add(p.settings.logoId);
+  const assets = assetRecs.filter(r => need.has(r.id));
+  await openProject(p, assets);
+}
+async function deleteProjectById(id) {
+  if (!confirm('این پروژه برای همیشه حذف شود؟')) return;
+  await delProjectRec(id);
+  renderProjectList();
+}
+function renderProjectList() {
+  const host = $('#projList'); if (!host) return;
+  allProjects().then(recs => {
+    recs.sort((a, b) => b.updatedAt - a.updatedAt);
+    host.innerHTML = recs.length ? recs.map(r => {
+      let meta = '';
+      try { const p = JSON.parse(r.json); meta = `${p.items.length} کلیپ • ${new Date(r.updatedAt).toLocaleDateString('fa-IR')}`; } catch (e) {}
+      return `<div class="proj-row">
+        <div class="proj-info"><b>${esc(JSON.parse(r.json).name || 'بی‌نام')}</b><span class="hint">${meta}</span></div>
+        <div class="row" style="gap:4px">
+          <button class="btn ghost small" data-open="${r.id}">باز کردن</button>
+          <button class="btn danger small" data-del="${r.id}">🗑️</button>
+        </div></div>`;
+    }).join('') : '<p class="hint">هنوز پروژه‌ای ذخیره نشده.</p>';
+  }).catch(() => { host.innerHTML = '<p class="hint">دسترسی به حافظه ممکن نشد.</p>'; });
+}
+
+/* ================= render everything ================= */
+function renderAll() {
+  const p = store.project;
+  $('#projName').value = p ? p.name : '';
+  $('#undoBtn').disabled = !canUndo();
+  $('#redoBtn').disabled = !canRedo();
+  if (!p) { showScreen('home'); renderProjectList(); return; }
+  sizeCanvasIfNeeded();
+  renderClips();
+  renderAudioLane();
+  renderMTL();
+  renderLibrary();
+  syncSettingControls();
+  if (!engine.playing) refreshFrame();
+}
+function sizeCanvasIfNeeded() {
+  const key = aspectKey();
+  if (key === lastAspectKey) return;
+  lastAspectKey = key;
+  sizeCanvas();
+}
+function sizeCanvas() {
+  const cv = $('#cv');
+  const [w, h] = previewDims();
+  cv.width = w; cv.height = h;
+  try { cv.getContext('2d').direction = 'rtl'; } catch (e) {}
+  refreshFrame();
+}
+function aspectKey() {
+  const st = store.project.settings;
+  return st.aspect === 'custom' ? `custom:${st.customW}x${st.customH}` : st.aspect;
+}
+function refreshFrame() {
+  const cv = $('#cv');
+  renderFrame(cv.getContext('2d'), cv.width, cv.height, engine.playhead);
+  const tot = totalDur();
+  $('#timeLbl').textContent = `${engine.playhead.toFixed(1)} / ${tot.toFixed(1)} ثانیه`;
+  $('#pbFill').style.width = (tot ? engine.playhead / tot * 100 : 0) + '%';
+}
+
+/* ================= timeline cards ================= */
+function selOptions(map, defLabel, cur) {
+  return `<option value="" ${cur ? '' : 'selected'}>${defLabel || 'همان پیش‌فرض'}</option>` +
+    Object.entries(map).map(([k, v]) => `<option value="${k}" ${cur === k ? 'selected' : ''}>${v}</option>`).join('');
+}
+function renderClips() {
+  const host = $('#clipList');
+  const p = store.project;
+  const sg = segments();
+  const badge = c => {
+    if (c.kind === 'photo') return `<span class="stepper"><button data-act="minus">−</button><b>${c.dur.toFixed(1)}s</b><button data-act="plus">+</button></span>`;
+    if (c.kind === 'video') return `<span class="len">🎬 ${c.srcStart.toFixed(1)}–${c.srcEnd.toFixed(1)}s${c.speed !== 1 ? ` ×${c.speed}` : ''}${c.muted ? ' 🔇' : ''}</span>`;
+    return '';
+  };
+  host.innerHTML = p.items.map((c, i) => {
+    const a = store.media.get(c.srcId);
+    const name = a ? a.name : '?';
+    return `<div class="clip ${store.selectedId === c.id ? 'sel' : ''}" data-id="${c.id}" data-i="${i}">
+      <img class="thumb" src="${a ? a.thumb : ''}" alt="">
+      <div class="meta">
+        <div class="clip-name" title="${esc(name)}">${esc(name)}</div>
+        <input class="cap" data-act="cap" placeholder="متن روی این بخش…" value="${esc(c.caption)}">
+        <input class="cap sub" data-act="sub" placeholder="زیرمتن (اسم افراد، مکان، تاریخ…)" value="${esc(c.sub)}">
+        <div class="row" style="justify-content:flex-start;gap:4px">
+          <input class="cap sub" data-act="chdr" placeholder="سرصفحهٔ این بخش (خالی = پیش‌فرض)" value="${esc(c.headerText ?? '')}" title="اگر خالی باشد سرصفحهٔ کلی استفاده می‌شود">
+          <input class="cap sub" data-act="cftr" placeholder="پاصفحهٔ این بخش — مثلاً نام مدرسه (خالی = پیش‌فرض)" value="${esc(c.footerText ?? '')}" title="اگر خالی باشد پاصفحهٔ کلی استفاده می‌شود">
+        </div>
+        <div class="row" style="justify-content:flex-start;gap:6px">
+          ${badge(c)}
+          <select data-act="fit" title="نحوهٔ نمایش">${selOptions(FITS, '✓ پیش‌فرض', c.fit)}</select>
+          <select data-act="bg" title="پس‌زمینهٔ فضای خالی">${selOptions(BGS, '✓ پیش‌فرض', c.bg)}</select>
+          <select data-act="motion" title="حرکت">${selOptions(MOTIONS, '✓ پیش‌فرض', c.motion)}</select>
+          <select data-act="sticker">${['', '⭐', '❤️', '🔥', '🎯', '🎓', '📌', '✅'].map(s => `<option value="${s}" ${c.sticker === s ? 'selected' : ''}>${s || 'بدون برچسب'}</option>`).join('')}</select>
+        </div>
+        ${c.kind === 'video' ? videoRow(c) : ''}
+      </div>
+      <div class="ops">
+        <button data-act="up" title="جابه‌جایی به عقب">⬆️</button>
+        <button data-act="down" title="جابه‌جایی به جلو">⬇️</button>
+        <button data-act="dup" title="تکثیر">⧉</button>
+        <button data-act="del" title="حذف">🗑️</button>
+      </div>
+    </div>`;
+  }).join('') || '<p class="hint">هنوز کلیپی نیست — از «رسانه‌ها» اضافه کن یا ویزارد گزارش سریع را اجرا کن.</p>';
+  $('#tlMeta').textContent = p.items.length ? `${p.items.length} کلیپ • ${fmtDur(totalDur())}` : '';
+}
+function videoRow(c) {
+  const a = store.media.get(c.srcId);
+  const max = a ? a.dur : 0;
+  return `<div class="row video-tools" style="justify-content:flex-start;gap:6px;flex-wrap:wrap">
+    <label class="hint">شروع <input type="number" data-act="vstart" min="0" max="${max.toFixed(1)}" step="0.1" value="${c.srcStart.toFixed(1)}"></label>
+    <label class="hint">پایان <input type="number" data-act="vend" min="0.2" max="${max.toFixed(1)}" step="0.1" value="${c.srcEnd.toFixed(1)}"></label>
+    <select data-act="vspeed" title="سرعت">${[0.5, 0.75, 1, 1.5, 2].map(s => `<option value="${s}" ${c.speed === s ? 'selected' : ''}>${s}×</option>`).join('')}</select>
+    <label class="hint">صدا <input type="range" data-act="vvol" min="0" max="1" step="0.05" value="${c.volume ?? 1}" style="width:70px"></label>
+    <label class="chk hint"><input type="checkbox" data-act="vmute" ${c.muted ? 'checked' : ''}> بی‌صدا</label>
+    <button class="btn ghost small" data-act="split" style="margin:0">✂️ برش اینجا</button>
+    <button class="btn ghost small" data-act="snap" style="margin:0">📸 عکس از این ویدئو</button>
+  </div>`;
+}
+
+function markSelection() {
+  document.querySelectorAll('#clipList .clip').forEach(el => el.classList.toggle('sel', el.dataset.id === store.selectedId));
+}
+function clipById(id) { return store.project.items.find(c => c.id === id); }
+function wireClips() {
+  const host = $('#clipList');
+  host.addEventListener('click', async e => {
+    const btn = e.target.closest('button[data-act]');
+    const card = e.target.closest('.clip'); if (!card) return;
+    const id = card.dataset.id;
+    const c = clipById(id); if (!c) return;
+    /* clicking selects/inputs/labels must NEVER rebuild the list (would kill open dropdowns) */
+    if (e.target.closest('select,input,label') && !btn) { store.selectedId = id; markSelection(); return; }
+    store.selectedId = id;
+    if (btn) {
+      const act = btn.dataset.act;
+      const i = store.project.items.indexOf(c);
+      if (act === 'up' && i > 0) commit(p => { [p.items[i - 1], p.items[i]] = [p.items[i], p.items[i - 1]]; });
+      else if (act === 'down' && i < p.items.length - 1) commit(p => { [p.items[i + 1], p.items[i]] = [p.items[i], p.items[i + 1]]; });
+      else if (act === 'del') commit(p => { p.items.splice(i, 1); });
+      else if (act === 'dup') commit(p => { p.items.splice(i + 1, 0, { ...JSON.parse(JSON.stringify(c)), id: c.id + '_c' + Math.random().toString(36).slice(2, 5) }); });
+      else if (act === 'minus') commit(p => { c.dur = clamp(0.5, 30, +(c.dur - 0.5).toFixed(1)); });
+      else if (act === 'plus') commit(p => { c.dur = clamp(0.5, 30, +(c.dur + 0.5).toFixed(1)); });
+      else if (act === 'split') await splitClip(c);
+      else if (act === 'snap') await snapClip(c);
+      renderAll();
+    } else {
+      markSelection();
+    }
+  });
+  host.addEventListener('change', e => {
+    const el = e.target; const act = el.dataset.act; if (!act) return;
+    const card = el.closest('.clip'); if (!card) return;
+    const c = clipById(card.dataset.id); if (!c) return;
+    const v = el.value;
+    if (act === 'fit') commit(() => { c.fit = v || null; });
+    else if (act === 'bg') commit(() => { c.bg = v || null; });
+    else if (act === 'motion') commit(() => { c.motion = v || null; });
+    else if (act === 'sticker') commit(() => { c.sticker = v; });
+    else if (act === 'vspeed') commit(() => { c.speed = +v; });
+    else if (act === 'vstart') commit(() => { c.srcStart = clamp(0, c.srcEnd - 0.3, +v); });
+    else if (act === 'vend') commit(() => { c.srcEnd = clamp(c.srcStart + 0.3, 1e9, +v); });
+    else if (act === 'vmute') commit(() => { c.muted = el.checked; });
+    renderAll();
+  });
+  host.addEventListener('input', e => {
+    const el = e.target; const act = el.dataset.act; if (!act) return;
+    const card = el.closest('.clip'); if (!card) return;
+    const c = clipById(card.dataset.id); if (!c) return;
+    if (act === 'cap') commit(() => { c.caption = el.value; }, { noUndo: true, silent: true });
+    else if (act === 'sub') commit(() => { c.sub = el.value; }, { noUndo: true, silent: true });
+    else if (act === 'chdr') commit(() => { c.headerText = el.value === '' ? null : el.value; }, { noUndo: true, silent: true });
+    else if (act === 'cftr') commit(() => { c.footerText = el.value === '' ? null : el.value; }, { noUndo: true, silent: true });
+    else if (act === 'vvol') commit(() => { c.volume = +el.value; }, { noUndo: true, silent: true });
+    refreshFrame();
+  });
+}
+async function splitClip(c) {
+  if (c.kind !== 'video') return toast('برش فقط برای ویدئو است', 'err');
+  const a = store.media.get(c.srcId);
+  const srcT = (c.srcStart + c.srcEnd) / 2; // split at middle when not playing near it
+  let cut = srcT;
+  // prefer playhead if inside this clip
+  const sg = segments();
+  const idx = sg.list.findIndex(s => s.clip === c);
+  if (idx >= 0) {
+    const s0 = sg.starts[idx], d = sg.list[idx].dur;
+    if (engine.playhead > s0 + 0.25 && engine.playhead < s0 + d - 0.25) cut = c.srcStart + (engine.playhead - s0) * (c.speed || 1);
+  }
+  if (cut - c.srcStart < 0.3 || c.srcEnd - cut < 0.3) return toast('نقطهٔ برش باید داخل بازه باشد', 'err');
+  commit(p => {
+    const i = p.items.indexOf(c);
+    const second = { ...JSON.parse(JSON.stringify(c)), id: c.id + '_s' + Math.random().toString(36).slice(2, 5), srcStart: cut, caption: '', sub: '' };
+    c.srcEnd = cut;
+    p.items.splice(i + 1, 0, second);
+  });
+  toast('ویدئو برش خورد ✂️');
+}
+async function snapClip(c) {
+  if (c.kind !== 'video') return;
+  const a = store.media.get(c.srcId);
+  if (!a) return;
+  toast('در حال گرفتن فریم… 📸');
+  try {
+    const file = await captureVideoFrame(a, (c.srcStart + c.srcEnd) / 2);
+    const ids = await importFiles([file], { silent: true });
+    if (ids.length) commit(p => {
+      const i = p.items.indexOf(c);
+      p.items.splice(i + 1, 0, newClip('photo', ids[0]));
+    });
+    toast('عکس به تایم‌لاین اضافه شد ✅');
+  } catch (e) { toast('گرفتن فریم ممکن نشد', 'err'); }
+}
+
+/* ================= audio lane (صدای تایم‌لاینی) ================= */
+function renderAudioLane() {
+  const host = $('#audioLane'); if (!host) return;
+  const p = store.project;
+  host.innerHTML = (p.audio || []).map(a => {
+    const m = store.media.get(a.srcId);
+    return `<div class="clip lane" data-aid="${a.id}">
+      <div class="meta">
+        <div class="clip-name">🎵 ${esc(m ? m.name : '?')}</div>
+        <div class="row" style="justify-content:flex-start;gap:6px">
+          <label class="hint">شروع(ثانیه) <input type="number" data-lane="start" min="0" step="0.5" value="${a.startAt.toFixed(1)}"></label>
+          <label class="hint">مدت <input type="number" data-lane="dur" min="0.2" step="0.5" value="${a.dur.toFixed(1)}"></label>
+          <label class="hint">ولوم <input type="range" data-lane="vol" min="0" max="1" step="0.05" value="${a.volume}" style="width:70px"></label>
+        </div>
+      </div>
+      <div class="ops"><button data-laneact="del" title="حذف">🗑️</button></div>
+    </div>`;
+  }).join('') || '<p class="hint">صدایی روی تایم‌لاین نیست — با دکمهٔ بالا اضافه کن.</p>';
+}
+function wireAudioLane() {
+  const host = $('#audioLane');
+  host.addEventListener('click', e => {
+    const b = e.target.closest('button[data-laneact="del"]'); if (!b) return;
+    if (e.target.closest('input,select')) return;
+    const id = b.closest('.lane').dataset.aid;
+    commit(p => { p.audio = (p.audio || []).filter(a => a.id !== id); });
+    renderAll();
+  });
+  host.addEventListener('change', e => {
+    const el = e.target; const act = el.dataset.lane; if (!act) return;
+    const id = el.closest('.lane').dataset.aid;
+    const row = (store.project.audio || []).find(a => a.id === id); if (!row) return;
+    if (act === 'start') commit(() => { row.startAt = Math.max(0, +el.value || 0); });
+    else if (act === 'dur') commit(() => { row.dur = Math.max(0.2, +el.value || 1); });
+    renderAll();
+  });
+  host.addEventListener('input', e => {
+    const el = e.target; if (el.dataset.lane !== 'vol') return;
+    const id = el.closest('.lane').dataset.aid;
+    const row = (store.project.audio || []).find(a => a.id === id); if (!row) return;
+    commit(() => { row.volume = +el.value; }, { noUndo: true, silent: true });
+  });
+  $('#laneAudioIn').addEventListener('change', async e => {
+    const files = Array.from(e.target.files); e.target.value = '';
+    if (!files.length) return;
+    toast('در حال خواندن فایل صوتی…');
+    const ids = await importFiles(files, { silent: true });
+    if (ids.length) commit(p => {
+      if (!p.audio) p.audio = [];
+      for (const id of ids) {
+        const a = store.media.get(id);
+        p.audio.push(newAudioClip(id, engine.playhead, Math.max(0.5, a.dur || 10)));
+      }
+    }, { noUndo: true });
+    renderAll();
+    toast('صدا روی تایم‌لاین قرار گرفت 🎵');
+  });
+}
+
+/* ================= multi-track timeline (چندلایه) ================= */
+let mtlPx = 0, editingTextId = null;
+function renderMTL() {
+  const body = $('#mtlBody'); if (!body || !store.project) return;
+  const tot = totalDur();
+  const width = Math.max(300, body.clientWidth - 6);
+  mtlPx = tot > 0 ? Math.max(6, width / tot) : width;
+  const wpx = Math.max(width, tot * mtlPx);
+  $('#tlRuler').style.width = wpx + 'px';
+  for (const id of ['laneTexts', 'laneVisual', 'laneAudioTl', 'laneMusic']) $('#' + id).style.width = wpx + 'px';
+  // ruler ticks
+  const candidates = [0.5, 1, 2, 5, 10, 15, 30, 60, 120, 300, 600];
+  const step = candidates.find(s => s * mtlPx >= 46) || 600;
+  let ticks = '';
+  for (let t = 0; t <= tot + 0.01; t += step) ticks += `<div class="tick" style="right:${t * mtlPx}px">${Math.round(t)}</div>`;
+  $('#tlRuler').innerHTML = ticks;
+  // text lane
+  $('#laneTexts').innerHTML = (store.project.texts || []).map(tx =>
+    `<div class="blk k-text ${editingTextId === tx.id ? 'sel' : ''}" data-txid="${tx.id}" style="right:${tx.start * mtlPx}px;width:${Math.max(26, tx.dur * mtlPx - 2)}px" title="${esc(tx.text)}">📝 ${esc(tx.text)}</div>`
+  ).join('') || '<span class="hint" style="position:absolute;top:6px;right:8px">—</span>';
+  // visual lane (segments incl title/outro)
+  const sg = segments();
+  $('#laneVisual').innerHTML = sg.list.map((s, i) => {
+    const label = s.kind === 'title' ? '🎬 عنوان' : s.kind === 'outro' ? '🔚 پایان' :
+      (s.clip.kind === 'photo' ? '🖼️ ' : '🎞️ ') + (() => { const a = store.media.get(s.clip.srcId); return a ? a.name : '?'; })();
+    const cls = s.kind === 'title' || s.kind === 'outro' ? 'k-' + s.kind : 'k-' + s.clip.kind;
+    const sel = s.clip && s.clip.id === store.selectedId ? ' sel' : '';
+    return `<div class="blk ${cls}${sel}" data-seg="${i}" style="right:${sg.starts[i] * mtlPx}px;width:${Math.max(22, s.dur * mtlPx - 2)}px" title="${esc(label)}">${esc(label)}</div>`;
+  }).join('');
+  // audio lane
+  $('#laneAudioTl').innerHTML = (store.project.audio || []).map(a => {
+    const m = store.media.get(a.srcId);
+    return `<div class="blk k-audio" data-laneid="${a.id}" style="right:${a.startAt * mtlPx}px;width:${Math.max(22, a.dur * mtlPx - 2)}px" title="${esc(m ? m.name : '?')}">🎵 ${esc(m ? m.name : '?')}</div>`;
+  }).join('') || '<span class="hint" style="position:absolute;top:6px;right:8px">—</span>';
+  // music lane
+  const mus = store.project.settings.musicId && store.media.get(store.project.settings.musicId);
+  $('#laneMusic').innerHTML = mus
+    ? `<div class="blk k-music" style="right:0;width:${wpx - 4}px">🎼 موزیک زمینه — ${esc(mus.name)}</div>`
+    : '<span class="hint" style="position:absolute;top:6px;right:8px">—</span>';
+  const ph = $('#tlPH');
+  ph.style.display = totalDur() > 0 ? 'block' : 'none';
+  ph.style.left = (engine.playhead * mtlPx) + 'px';
+}
+function wireMTL() {
+  const ruler = $('#tlRuler');
+  const seekFromEvent = e => {
+    const rect = ruler.getBoundingClientRect();
+    const x = rect.right - e.clientX; /* RTL: right edge = 0s */
+    seek(clamp(0, totalDur(), x / mtlPx));
+  };
+  let down = false;
+  ruler.addEventListener('pointerdown', e => { down = true; ruler.setPointerCapture(e.pointerId); seekFromEvent(e); });
+  ruler.addEventListener('pointermove', e => { if (down) seekFromEvent(e); });
+  ruler.addEventListener('pointerup', () => { down = false; });
+  $('#laneTexts').addEventListener('click', e => {
+    const b = e.target.closest('.blk'); if (!b) return;
+    editingTextId = b.dataset.txid;
+    const tx = (store.project.texts || []).find(x => x.id === editingTextId);
+    if (!tx) return;
+    $('#textEdit').hidden = false;
+    $('#txTextInput').value = tx.text; $('#txStart').value = tx.start.toFixed(1);
+    $('#txDur').value = tx.dur.toFixed(1); $('#txPos').value = tx.pos;
+    $('#txAnim').value = tx.anim; $('#txColor').value = tx.color || '#ffffff';
+    renderMTL();
+  });
+  $('#addTextBtn').addEventListener('click', () => {
+    if (totalDur() <= 0) return toast('اول چند عکس/فیلم اضافه کن 🙂', 'err');
+    let id;
+    commit(p => {
+      const tx = newTextClip('متن جدید', Math.min(engine.playhead, Math.max(0, totalDur() - 2)), 3);
+      id = tx.id;
+      if (!p.texts) p.texts = [];
+      p.texts.push(tx);
+    });
+    editingTextId = id;
+    $('#textEdit').hidden = false;
+    $('#txTextInput').value = 'متن جدید';
+    $('#txStart').value = Math.min(engine.playhead, Math.max(0, totalDur() - 2)).toFixed(1);
+    $('#txDur').value = '3.0';
+    renderAll();
+    $('#txTextInput').focus();
+  });
+  $('#txClose').addEventListener('click', () => { $('#textEdit').hidden = true; editingTextId = null; renderMTL(); });
+  $('#txDel').addEventListener('click', () => {
+    if (!editingTextId) return;
+    commit(p => { p.texts = (p.texts || []).filter(x => x.id !== editingTextId); });
+    editingTextId = null; $('#textEdit').hidden = true; renderAll();
+  });
+  const bindTx = (id, act) => $(id).addEventListener('input', e => {
+    const tx = (store.project.texts || []).find(x => x.id === editingTextId); if (!tx) return;
+    commit(() => { act(tx, e.target); }, { noUndo: true, silent: true });
+    refreshFrame(); renderMTL();
+  });
+  bindTx('#txTextInput', (tx, el) => { tx.text = el.value; });
+  bindTx('#txStart', (tx, el) => { tx.start = Math.max(0, +el.value || 0); });
+  bindTx('#txDur', (tx, el) => { tx.dur = Math.max(0.5, +el.value || 1); });
+  bindTx('#txPos', (tx, el) => { tx.pos = el.value; });
+  bindTx('#txAnim', (tx, el) => { tx.anim = el.value; });
+  bindTx('#txColor', (tx, el) => { tx.color = el.value; });
+  $('#laneVisual').addEventListener('click', e => {
+    const b = e.target.closest('.blk'); if (!b) return;
+    const sg = segments();
+    const seg = sg.list[+b.dataset.seg];
+    if (seg && seg.clip) {
+      store.selectedId = seg.clip.id;
+      markSelection();
+      const card = document.querySelector(`.clip[data-id="${seg.clip.id}"]`);
+      if (card) card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  });
+  window.addEventListener('resize', debounceMTL);
+}
+const debounceMTL = (() => { let t; return () => { clearTimeout(t); t = setTimeout(renderMTL, 250); }; })();
+
+/* ================= media library ================= */
+function renderLibrary() {
+  const host = $('#libGrid');
+  const items = Array.from(store.media.values()).filter(a => a.kind === 'photo' || a.kind === 'video');
+  const audios = Array.from(store.media.values()).filter(a => a.kind === 'audio');
+  host.innerHTML = items.map(a => `
+    <div class="lib-item" data-id="${a.id}">
+      <img src="${a.thumb}" alt="">
+      <div class="lib-meta">
+        <div class="lib-name" title="${esc(a.name)}">${esc(a.name)}</div>
+        <span class="hint">${a.kind === 'video' ? '🎬 ' : '🖼️ '}${a.w}×${a.h}${a.kind === 'video' ? ' • ' + fmtDur(a.dur) : ''}<br>${fmtSize(a.size)}</span>
+      </div>
+      <div class="lib-ops">
+        <button data-lact="add" title="افزودن به تایم‌لاین">➕</button>
+        <button data-lact="del" title="حذف از پروژه">🗑️</button>
+      </div>
+    </div>`).join('') || '<p class="hint">رسانه‌ای نیست.</p>';
+  $('#audioLine').innerHTML = audios.length
+    ? audios.map(a => `<span class="hint">🎵 ${esc(a.name)} (${fmtDur(a.dur)})</span>`).join(' ') : '';
+}
+function wireLibrary() {
+  $('#libGrid').addEventListener('click', e => {
+    const b = e.target.closest('button[data-lact]'); if (!b) return;
+    const id = b.closest('.lib-item').dataset.id;
+    const a = store.media.get(id); if (!a) return;
+    if (b.dataset.lact === 'add') {
+      commit(p => { p.items.push(newClip(a.kind, a.id, a.kind === 'video' ? { srcEnd: Math.min(a.dur, 3600) } : {})); });
+      toast('به تایم‌لاین اضافه شد ➕');
+    } else if (b.dataset.lact === 'del') {
+      if (!confirm(`«${a.name}» از پروژه حذف شود؟`)) return;
+      commit(p => { p.items = p.items.filter(c => c.srcId !== id); if (p.settings.musicId === id) p.settings.musicId = null; if (p.settings.logoId === id) p.settings.logoId = null; });
+    }
+    renderAll();
+  });
+  $('#addMediaIn').addEventListener('change', async e => {
+    const files = Array.from(e.target.files); e.target.value = '';
+    await addFilesToProject(files);
+  });
+}
+async function addFilesToProject(files, { silent = false } = {}) {
+  toast('در حال خواندن فایل‌ها…');
+  const ids = await importFiles(files, { silent });
+  if (ids.length) {
+    commit(p => {
+      for (const id of ids) {
+        const a = store.media.get(id);
+        p.items.push(newClip(a.kind, id, a.kind === 'video' ? { srcEnd: Math.min(a.dur, 3600) } : {}));
+      }
+    }, { noUndo: true });
+  }
+  renderAll();
+  return ids;
+}
+
+/* ================= global settings ================= */
+function chipsHTML(map, cur, attr) {
+  return Object.entries(map).map(([k, v]) => `<button data-${attr}="${k}" class="${cur === k ? 'on' : ''}">${typeof v === 'string' ? v : v.name}</button>`).join('');
+}
+function syncSettingControls() {
+  const st = store.project.settings;
+  $('#aspectChips').innerHTML = chipsHTML(ASPECTS, st.aspect, 'a') + `<button data-a="custom" class="${st.aspect === 'custom' ? 'on' : ''}">⚙️ سفارشی</button>`;
+  $('#customDims').style.display = st.aspect === 'custom' ? 'flex' : 'none';
+  $('#cw').value = st.customW || 1920; $('#ch').value = st.customH || 1080;
+  $('#transSel').value = st.transition;
+  $('#transDurR').value = st.transDur; $('#transDurLbl').textContent = st.transDur.toFixed(1) + 's';
+  $('#photoDurR').value = st.photoDur; $('#photoDurLbl').textContent = st.photoDur.toFixed(1) + 's';
+  $('#fitSel').value = st.fitDefault;
+  $('#bgSel').value = st.bgDefault;
+  $('#bgColorIn').value = st.bgColor;
+  $('#motionSel').value = st.motion;
+  $('#motionIntR').value = st.motionIntensity; $('#motionIntLbl').textContent = '×' + (+st.motionIntensity).toFixed(1);
+  $('#filterSel').value = st.filter || 'none';
+  $('#fxChk').checked = !!st.fx;
+  $('#themeChips').innerHTML = chipsHTML(THEMES, st.theme, 't');
+  $('#fontChips').innerHTML = chipsHTML(FONTS, st.font, 'f');
+  $('#textPosSel').value = st.textPos;
+  $('#capSizeR').value = st.capSize || 1;
+  $('#titleIn').value = st.titleText; $('#schoolIn').value = st.schoolName;
+  $('#dateIn').value = st.reportDate; $('#outroIn').value = st.outroText;
+  $('#headerIn').value = st.headerText; $('#footerIn').value = st.footerText;
+  const logo = st.logoId && store.media.get(st.logoId);
+  $('#logoPrev').innerHTML = logo ? `<img src="${logo.thumb}" alt="">` : '<span class="hint">لوگویی انتخاب نشده</span>';
+  $('#logoPosSel').value = st.logoPos;
+  $('#logoSizeR').value = st.logoSize; $('#logoOpR').value = st.logoOpacity;
+  const music = st.musicId && store.media.get(st.musicId);
+  $('#musicName').textContent = music ? '🎵 ' + music.name : '';
+  $('#musicVolR').value = st.musicVol; $('#musicFadeChk').checked = !!st.musicFade;
+  $('#resChips').innerHTML = [720, 1080, 1440].map(r => `<button data-res="${r}" class="${expRes === r ? 'on' : ''}">${r}p</button>`).join('');
+  $('#fpsChips').innerHTML = [24, 25, 30].map(r => `<button data-fps="${r}" class="${expFps === r ? 'on' : ''}">${r}</button>`).join('');
+  $('#qChips').innerHTML = Object.entries(QUALITIES).map(([k, q]) => `<button data-q="${k}" class="${expQ === k ? 'on' : ''}">${q.name}</button>`).join('');
+  $('#expModeChips').innerHTML = `<button data-em="quality" class="${expMode === 'quality' ? 'on' : ''}">🎚️ کیفیت دلخواه</button>
+    <button data-em="size" class="${expMode === 'size' ? 'on' : ''}">📦 حجم مشخص</button>`;
+  $('#sizeModeBox').style.display = expMode === 'size' ? 'flex' : 'none';
+  $('#qualityModeBox').style.display = expMode === 'quality' ? 'block' : 'none';
+  updateExportButtonLabel();
+}
+function updateExportButtonLabel() {
+  const tot = totalDur();
+  if (expMode === 'size') {
+    if (tot > 0) {
+      const c = computeForSize(expSizeMB);
+      $('#sizeCalc').textContent = `برای ${tot.toFixed(0)} ثانیه ویدیو: ${c.resMin}p • ${c.fps} فریم • بیت‌ریت ${(c.videoBps / 1e6).toFixed(1)}Mbps`;
+      $('#sizeWarn').textContent = c.level === 'good' ? '✅ کیفیت خوب قابل دستیابی است' :
+        c.level === 'ok' ? '⚠️ برای این حجم، کیفیت متوسط در دسترس است' :
+        '⚠️ حجم کم است؛ وضوح پایین‌تر از حد مطلوب خواهد بود — مدت را کمتر یا حجم را بیشتر کنید';
+    } else { $('#sizeCalc').textContent = ''; $('#sizeWarn').textContent = ''; }
+    $('#expPreset').textContent = `حجم ~${expSizeMB} مگابایت`;
+  } else {
+    $('#sizeCalc').textContent = ''; $('#sizeWarn').textContent = '';
+    if (tot > 0) {
+      const { W, H } = exportDims(expRes);
+      const estMB = bitrateFor(W, H, expFps, expQ) * tot / 8 / 1048576;
+      $('#manualEst').textContent = `≈ حجم تقریبی این تنظیم: ${estMB.toFixed(1)} مگابایت برای ${tot.toFixed(0)} ثانیه`;
+    } else $('#manualEst').textContent = '';
+    $('#expPreset').textContent = `${expRes}p • ${expFps}fps`;
+  }
+}
+function wireGlobalControls() {
+  $('#homeBtn').addEventListener('click', closeToHome);
+  $('#projName').addEventListener('change', e => commit(p => { p.name = e.target.value || 'گزارش بدون نام'; }));
+  $('#undoBtn').addEventListener('click', () => { undo(); });
+  $('#redoBtn').addEventListener('click', () => { redo(); });
+  $('#newProjBtn').addEventListener('click', () => { const n = prompt('نام پروژه:', 'گزارش ' + ORG_NAME); if (n === null) return; startNewProject(n); });
+  $('#demoBtn').addEventListener('click', () => createDemoProject());
+  $('#wizardBtn').addEventListener('click', () => { $('#wizardCard').hidden = !$('#wizardCard').hidden; $('#wDate').value = todayFa(); });
+  $('#wCancel').addEventListener('click', () => { $('#wizardCard').hidden = true; });
+  $('#wFiles').addEventListener('change', e => {
+    const n = e.target.files.length;
+    $('#wFilesName').textContent = n ? `${n} فایل انتخاب شد ✅` : '';
+  });
+  $('#wGo').addEventListener('click', () => runWizard());
+  $('#projList').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.open) openProjectById(b.dataset.open);
+    if (b.dataset.del) deleteProjectById(b.dataset.del);
+  });
+  const ed = $('#scrEdit');
+  ed.addEventListener('click', e => {
+    const b = e.target.closest('button[data-a],button[data-t],button[data-f],button[data-res],button[data-fps],button[data-q],button[data-em]');
+    if (!b) return;
+    const st = store.project.settings;
+    if (b.dataset.a) commit(p => { p.settings.aspect = b.dataset.a; }, { noUndo: true });
+    else if (b.dataset.t) commit(p => { p.settings.theme = b.dataset.t; }, { noUndo: true });
+    else if (b.dataset.f) { commit(p => { p.settings.font = b.dataset.f; }, { noUndo: true }); const f = FONTS[b.dataset.f]; document.fonts && document.fonts.load(`${f.weight} 48px ${f.family}`).catch(() => {}); }
+    else if (b.dataset.res) { expRes = +b.dataset.res; }
+    else if (b.dataset.fps) { expFps = +b.dataset.fps; }
+    else if (b.dataset.q) { expQ = b.dataset.q; }
+    else if (b.dataset.em) { expMode = b.dataset.em; }
+    syncSettingControls();
+    renderAll();
+  });
+  $('#cwApply').addEventListener('click', () => { commit(p => { p.settings.aspect = 'custom'; p.settings.customW = clamp(240, 2160, +$('#cw').value || 1920); p.settings.customH = clamp(240, 2160, +$('#ch').value || 1080); }, { noUndo: true }); renderAll(); });
+  const S = sel => $(sel);
+  $('#transSel').addEventListener('change', e => { commit(p => { p.settings.transition = e.target.value; }, { noUndo: true }); renderAll(); });
+  $('#transDurR').addEventListener('input', e => { commit(p => { p.settings.transDur = +e.target.value; }, { noUndo: true, silent: true }); $('#transDurLbl').textContent = (+e.target.value).toFixed(1) + 's'; refreshFrame(); });
+  $('#photoDurR').addEventListener('input', e => { commit(p => { p.settings.photoDur = +e.target.value; }, { noUndo: true, silent: true }); $('#photoDurLbl').textContent = (+e.target.value).toFixed(1) + 's'; });
+  $('#applyDurAll').addEventListener('click', () => { commit(p => p.items.forEach(c => { if (c.kind === 'photo') c.dur = p.settings.photoDur; })); toast('مدت به همهٔ عکس‌ها اعمال شد ✅'); });
+  $('#fitSel').addEventListener('change', e => { commit(p => { p.settings.fitDefault = e.target.value; }, { noUndo: true }); renderAll(); });
+  $('#bgSel').addEventListener('change', e => { commit(p => { p.settings.bgDefault = e.target.value; }, { noUndo: true }); renderAll(); });
+  $('#bgColorIn').addEventListener('input', e => { commit(p => { p.settings.bgColor = e.target.value; }, { noUndo: true, silent: true }); refreshFrame(); });
+  $('#applyFitAll').addEventListener('click', () => { commit(p => p.items.forEach(c => { c.fit = p.settings.fitDefault; c.bg = p.settings.bgDefault; })); toast('نمایش و پس‌زمینه به همه اعمال شد ✅'); });
+  $('#motionSel').addEventListener('change', e => { commit(p => { p.settings.motion = e.target.value; }, { noUndo: true }); renderAll(); });
+  $('#motionIntR').addEventListener('input', e => { commit(p => { p.settings.motionIntensity = +e.target.value; }, { noUndo: true, silent: true }); $('#motionIntLbl').textContent = '×' + (+e.target.value).toFixed(1); refreshFrame(); });
+  $('#applyMotionAll').addEventListener('click', () => { commit(p => p.items.forEach(c => { c.motion = null; })); toast('حرکت خودکار روی همه اعمال شد ✅'); });
+  $('#filterSel').addEventListener('change', e => { commit(p => { p.settings.filter = e.target.value; }, { noUndo: true }); renderAll(); });
+  $('#fxChk').addEventListener('change', e => { commit(p => { p.settings.fx = e.target.checked; }, { noUndo: true }); renderAll(); });
+  $('#textPosSel').addEventListener('change', e => { commit(p => { p.settings.textPos = e.target.value; }, { noUndo: true }); renderAll(); });
+  $('#capSizeR').addEventListener('input', e => { commit(p => { p.settings.capSize = +e.target.value; }, { noUndo: true, silent: true }); refreshFrame(); });
+  $('#titleIn').addEventListener('input', e => { commit(p => { p.settings.titleText = e.target.value; }, { noUndo: true, silent: true }); refreshFrame(); });
+  $('#schoolIn').addEventListener('input', e => { commit(p => { p.settings.schoolName = e.target.value; }, { noUndo: true, silent: true }); refreshFrame(); });
+  $('#dateIn').addEventListener('input', e => { commit(p => { p.settings.reportDate = e.target.value; }, { noUndo: true, silent: true }); refreshFrame(); });
+  $('#outroIn').addEventListener('input', e => { commit(p => { p.settings.outroText = e.target.value; }, { noUndo: true, silent: true }); refreshFrame(); });
+  $('#headerIn').addEventListener('input', e => { commit(p => { p.settings.headerText = e.target.value; }, { noUndo: true, silent: true }); refreshFrame(); });
+  $('#footerIn').addEventListener('input', e => { commit(p => { p.settings.footerText = e.target.value; }, { noUndo: true, silent: true }); refreshFrame(); });
+  $('#logoIn').addEventListener('change', async e => {
+    const f = e.target.files[0]; e.target.value = ''; if (!f) return;
+    const ids = await importFiles([f], { silent: true });
+    if (ids.length) commit(p => { p.settings.logoId = ids[0]; }, { noUndo: true });
+    renderAll();
+  });
+  $('#logoRm').addEventListener('click', () => { commit(p => { p.settings.logoId = null; }, { noUndo: true }); renderAll(); });
+  $('#logoPosSel').addEventListener('change', e => { commit(p => { p.settings.logoPos = e.target.value; }, { noUndo: true }); renderAll(); });
+  $('#logoSizeR').addEventListener('input', e => { commit(p => { p.settings.logoSize = +e.target.value; }, { noUndo: true, silent: true }); refreshFrame(); });
+  $('#logoOpR').addEventListener('input', e => { commit(p => { p.settings.logoOpacity = +e.target.value; }, { noUndo: true, silent: true }); refreshFrame(); });
+  $('#musicIn').addEventListener('change', async e => {
+    const f = e.target.files[0]; e.target.value = ''; if (!f) return;
+    const ids = await importFiles([f], { silent: true });
+    if (ids.length) {
+      const a = store.media.get(ids[0]);
+      initAudio(); wireElement(a.el);
+      commit(p => { p.settings.musicId = ids[0]; }, { noUndo: true });
+    }
+    renderAll();
+  });
+  $('#musicVolR').addEventListener('input', e => { commit(p => { p.settings.musicVol = +e.target.value; }, { noUndo: true, silent: true }); });
+  $('#musicFadeChk').addEventListener('change', e => { commit(p => { p.settings.musicFade = e.target.checked; }, { noUndo: true }); });
+  $('#expSizeMB').addEventListener('input', e => { expSizeMB = clamp(0.5, 4096, +e.target.value || 15); updateExportButtonLabel(); });
+  $('#playBtn').addEventListener('click', () => { engine.playing ? pause() : play(); updatePlayBtn(); });
+  $('#exportBtn').addEventListener('click', () => doExport());
+  $('#cancelBtn').addEventListener('click', () => { cancelExport(); });
+  $('#shareBtn').addEventListener('click', shareClip);
+  $('#againBtn').addEventListener('click', () => { $('#result').hidden = true; });
+  wireClips();
+  wireLibrary();
+  wireAudioLane();
+  wireMTL();
+}
+function updatePlayBtn() { $('#playBtn').textContent = engine.playing ? '⏸ توقف' : '▶️ پخش'; }
+setInterval(updatePlayBtn, 500);
+
+/* ================= wizard (ساخت گزارش سریع) ================= */
+async function runWizard() {
+  const title = $('#wTitle').value.trim();
+  const school = $('#wSchool').value.trim();
+  const date = $('#wDate').value.trim() || todayFa();
+  const targetMin = clamp(0.5, 30, +$('#wTarget').value || 2);
+  const aspect = $('#wAspect').value;
+  const files = Array.from($('#wFiles').files);
+  if (!files.length) return toast('چند عکس یا فیلم انتخاب کن', 'err');
+  const p = newProject(title || ('گزارش ' + (school || ORG_NAME)));
+  const st = p.settings;
+  st.aspect = aspect;
+  st.titleText = title || 'گزارش تصویری';
+  st.schoolName = school || ORG_NAME;
+  st.reportDate = date;
+  st.footerText = school ? school + (date ? '  •  ' + date : '') : ORG_NAME + (date ? '  •  ' + date : '');
+  st.outroText = 'با تشکر از همراهی شما 🙏';
+  toast('در حال ساخت تایم‌لاین…');
+  const ids = await importFiles(files, { silent: true });
+  const photos = ids.filter(id => store.media.get(id).kind === 'photo');
+  const videos = ids.filter(id => store.media.get(id).kind === 'video');
+  const n = photos.length || 1;
+  st.photoDur = clamp(1.5, 8, Math.round(((targetMin * 60 - videos.reduce((s, v) => s + Math.min(store.media.get(v).dur, 20), 0) - 6) / n) * 10) / 10);
+  for (const id of photos) p.items.push(newClip('photo', id, { dur: st.photoDur }));
+  for (const id of videos) {
+    const a = store.media.get(id);
+    p.items.push(newClip('video', id, { srcEnd: Math.min(a.dur, 20) }));
+  }
+  // optional logo & music
+  const logoF = $('#wLogo').files[0];
+  if (logoF) {
+    const lid = (await importFiles([logoF], { silent: true }))[0];
+    if (lid) st.logoId = lid;
+  }
+  const musicF = $('#wMusic').files[0];
+  if (musicF) {
+    const mid = (await importFiles([musicF], { silent: true }))[0];
+    if (mid) { st.musicId = mid; initAudio(); wireElement(store.media.get(mid).el); }
+  }
+  store.undoStack = []; store.redoStack = [];
+  await openProject(p, []);
+  $('#wizardCard').hidden = true;
+  toast('تایم‌لاین اولیه آماده شد — می‌تونی هر بخش رو ویرایش کنی ✅');
+}
+/* demo project (automation & first-run try) */
+async function createDemoProject() {
+  const defs = [['🚀', '#ff9966', '#ff5e62', 'ورودی مدرسه'], ['📚', '#42e695', '#3bb2b8', 'کلاس درس'],
+    ['⚽', '#f83600', '#f9d423', 'زنگ تفریح'], ['🎨', '#fc00ff', '#00dbde', 'کارگاه هنری'], ['🏅', '#00c6ff', '#0072ff', 'مراسم اختتامیه']];
+  const jobs = defs.map((d, i) => new Promise(res => {
+    const c = document.createElement('canvas'); c.width = 1280; c.height = 960;
+    const x = c.getContext('2d');
+    const g = x.createLinearGradient(0, 0, 1280, 960);
+    g.addColorStop(0, d[1]); g.addColorStop(1, d[2]);
+    x.fillStyle = g; x.fillRect(0, 0, 1280, 960);
+    x.textAlign = 'center'; x.textBaseline = 'middle';
+    x.fillStyle = 'rgba(255,255,255,.92)'; x.font = '280px serif'; x.fillText(d[0], 640, 420);
+    x.font = '900 84px Vazirmatn, Tahoma'; x.fillText(d[3], 640, 760);
+    c.toBlob(b => res(new File([b], 'نمونه' + (i + 1) + '.jpg', { type: 'image/jpeg' })), 'image/jpeg', 0.9);
+  }));
+  const files = await Promise.all(jobs);
+  const p = newProject('گزارش نمونه — بازدید از مدرسه');
+  p.settings.titleText = 'گزارش تصویری بازدید از مدرسه';
+  p.settings.schoolName = ORG_NAME;
+  p.settings.reportDate = todayFa();
+  p.settings.footerText = ORG_NAME + '  •  ' + todayFa();
+  p.settings.photoDur = 2.5;
+  const ids = await importFiles(files, { silent: true });
+  for (const id of ids) p.items.push(newClip('photo', id, { dur: p.settings.photoDur }));
+  store.undoStack = []; store.redoStack = [];
+  await openProject(p, []);
+  toast('پروژهٔ نمونه ساخته شد ✨');
+}
+
+/* ================= export flow ================= */
+async function doExport() {
+  if (engine.exporting) return;
+  let opts;
+  if (expMode === 'size') {
+    const c = computeForSize(expSizeMB);
+    opts = { resMin: c.resMin, fps: c.fps, bitrate: c.videoBps };
+    toast(`تنظیم خودکار: ${c.resMin}p • ${c.fps}fps • ${(c.videoBps / 1e6).toFixed(1)}Mbps ⚙️`);
+  } else {
+    opts = { resMin: expRes, fps: expFps, quality: expQ };
+  }
+  const btn = $('#exportBtn');
+  btn.hidden = true; $('#cancelBtn').hidden = false; $('#exBox').hidden = false; $('#result').hidden = true;
+  try {
+    const { blob, ext, W, H } = await exportVideo(opts);
+    state_last = { blob, ext };
+    const url = URL.createObjectURL(blob);
+    const v = $('#resVid');
+    if (v.src) URL.revokeObjectURL(v.src);
+    v.src = url;
+    $('#resSize').textContent = `${W}×${H} • ${fmtSize(blob.size)}`;
+    const dl = $('#dlBtn');
+    dl.href = url;
+    dl.download = (store.project.name || 'report').replace(/[\\/:*?"<>|]/g, '-') + '.' + ext;
+    $('#result').hidden = false;
+    $('#result').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    toast('ویدیو آماده شد 🎉');
+  } catch (e) {
+    if (e.message === 'cancelled') toast('ضبط لغو شد', 'err');
+    else if (e.message === 'empty') toast('اول چند عکس/فیلم اضافه کن 🙂', 'err');
+    else { console.error(e); toast('ساخت ویدیو ممکن نشد: ' + e.message, 'err'); }
+  } finally {
+    btn.hidden = false; $('#cancelBtn').hidden = true; $('#exBox').hidden = true;
+  }
+}
+let state_last = null;
+async function shareClip() {
+  const b = state_last; if (!b) return;
+  const f = new File([b.blob], (store.project.name || 'report') + '.' + b.ext, { type: b.blob.type || 'video/webm' });
+  if (navigator.canShare && navigator.canShare({ files: [f] })) {
+    try { await navigator.share({ files: [f], title: store.project.name }); } catch (e) {}
+  } else toast('اشتراک‌گذاری مستقیم اینجا نیست؛ اول دانلود کن 📤', 'err');
+}
+
+/* ================= keyboard shortcuts ================= */
+function wireShortcuts() {
+  document.addEventListener('keydown', e => {
+    if (!store.project || $('#scrEdit').hidden) return;
+    const t = e.target;
+    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable)) return;
+    const ctrl = e.ctrlKey || e.metaKey;
+    if (e.code === 'Space') { e.preventDefault(); engine.playing ? pause() : play(); updatePlayBtn(); }
+    else if (ctrl && e.key.toLowerCase() === 'z' && !e.shiftKey) { e.preventDefault(); undo(); }
+    else if (ctrl && (e.key.toLowerCase() === 'y' || (e.key.toLowerCase() === 'z' && e.shiftKey))) { e.preventDefault(); redo(); }
+    else if (e.key === 'Delete' || e.key === 'Backspace') {
+      if (store.selectedId) { const i = store.project.items.findIndex(c => c.id === store.selectedId); if (i >= 0) { commit(p => p.items.splice(i, 1)); renderAll(); } }
+    } else if (e.key.toLowerCase() === 'd' && !ctrl) {
+      if (store.selectedId) { const i = store.project.items.findIndex(c => c.id === store.selectedId); if (i >= 0) { commit(p => p.items.splice(i + 1, 0, { ...JSON.parse(JSON.stringify(p.items[i])), id: p.items[i].id + '_c' + Math.random().toString(36).slice(2, 5) })); renderAll(); } }
+    } else if (e.key.toLowerCase() === 's' && !ctrl) {
+      const c = store.project.items.find(x => x.id === store.selectedId);
+      if (c && c.kind === 'video') splitClip(c);
+    } else if (e.key === 'ArrowLeft') { e.preventDefault(); seek(engine.playhead - 0.5); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); seek(engine.playhead + 0.5); }
+    else if (e.key === 'Home') { seek(0); }
+    else if (e.key === 'End') { seek(totalDur()); }
+  });
+}
+
+/* ---------- main.js ---------- */
+/* main.js — boot: restore last project or show home */
+
+
+
+
+
+initUI();
+
+(async () => {
+  try {
+    const last = localStorage.getItem('report-app:last');
+    if (last) {
+      const recs = await allProjects();
+      if (recs.some(r => r.id === last)) {
+        const rec = recs.find(r => r.id === last);
+        const p = JSON.parse(rec.json);
+        const assetRecs = await allAssets();
+        const need = new Set();
+        p.items.forEach(it => it.srcId && need.add(it.srcId));
+        (p.audio || []).forEach(a => a.srcId && need.add(a.srcId));
+        if (p.settings.musicId) need.add(p.settings.musicId);
+        if (p.settings.logoId) need.add(p.settings.logoId);
+        const assets = assetRecs.filter(r => need.has(r.id));
+        await openProject(p, assets);
+        return;
+      }
+    }
+  } catch (e) { console.warn('restore failed', e); }
+  showScreen('home');
+  renderProjectList();
+})();
+
+/* PWA */
+if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+  addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
+} catch (e) { window.__bundleErr = (e && e.stack) || String(e); }
+</script>
+</body>
+</html>

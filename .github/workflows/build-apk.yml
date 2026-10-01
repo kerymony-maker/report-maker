@@ -1,0 +1,79 @@
+name: Build Android APK
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Write APK options
+        run: |
+          cat > apk-opts.json <<'JSONEOF'
+          {
+            "packageId": "com.kerymony.reportmaker",
+            "name": "گزارش‌ساز",
+            "launcherName": "گزارش‌ساز",
+            "appVersion": "1.0.0.0",
+            "appVersionCode": 1,
+            "display": "standalone",
+            "host": "https://kerymony-maker.github.io/report-maker/",
+            "startUrl": "/report-maker/",
+            "themeColor": "#0f2b5b",
+            "themeColorDark": "#000000",
+            "backgroundColor": "#eef1f9",
+            "navigationColor": "#0f2b5b",
+            "navigationColorDark": "#000000",
+            "navigationDividerColor": "#0f2b5b",
+            "navigationDividerColorDark": "#000000",
+            "iconUrl": "https://kerymony-maker.github.io/report-maker/icons/icon-512.png",
+            "maskableIconUrl": "https://kerymony-maker.github.io/report-maker/icons/icon-512.png",
+            "monochromeIconUrl": null,
+            "webManifestUrl": "https://kerymony-maker.github.io/report-maker/manifest.webmanifest",
+            "shortcuts": [],
+            "signingMode": "new",
+            "signing": {
+              "file": null,
+              "alias": "report-maker-key",
+              "fullName": "Kerymony Maker",
+              "organization": "Kerymony",
+              "organizationalUnit": "Media",
+              "countryCode": "IR",
+              "password": "ReportMaker#2026",
+              "keyPassword": "ReportMaker#2026"
+            },
+            "fallbackType": "customtabs",
+            "features": {
+              "locationDelegation": { "enabled": false },
+              "playBilling": { "enabled": false }
+            },
+            "enableNotifications": true,
+            "enableSiteSettingsShortcut": true,
+            "isChromeOSOnly": false,
+            "isMetaQuest": false,
+            "includeSourceCode": false,
+            "orientation": "default",
+            "splashScreenFadeOutDuration": 300,
+            "shareTarget": { "method": "GET", "enctype": "application/x-www-form-urlencoded" }
+          }
+          JSONEOF
+
+      - name: Generate APK (PWABuilder CloudAPK)
+        run: |
+          curl -sf -X POST -H "Content-Type: application/json; charset=utf-8" \
+            --data-binary @apk-opts.json \
+            -o apk.zip \
+            "https://pwabuilder-cloudapk.azurewebsites.net/generateApkZip" --max-time 600
+          unzip -o apk.zip
+          echo "=== extracted ==="; ls -la
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: report-maker-apk
+          path: |
+            *.apk
+            assetlinks.json
+            android.keystore
+            signing*
+          if-no-files-found: error

@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f2b5b">
+<title>🏫 گزارش‌ساز — ساخت سریع ویدیوی گزارش</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vazirmatn@33.0.3/Vazirmatn-font-face.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/lalezar@5/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/markazi-text@5/700.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/gulzar@5/index.css">
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:Vazirmatn,Tahoma,sans-serif;background:#eef1f9;color:#1e2438}
+.topbar{position:sticky;top:0;z-index:20;display:flex;gap:8px;align-items:center;background:linear-gradient(135deg,#0f2b5b,#1e56a0);color:#fff;padding:10px 12px}
+.topbar h1{font-size:1.02rem;margin:0;white-space:nowrap}
+.proj-name{flex:1;min-width:60px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:10px;color:#fff;padding:8px 12px;font-family:inherit;font-size:.95rem}
+.proj-name::placeholder{color:rgba(255,255,255,.6)}
+.tb-actions{display:flex;gap:6px;align-items:center}
+.tb-actions button{border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.12);color:#fff;border-radius:9px;padding:7px 9px;cursor:pointer;font-size:.9rem}
+.tb-actions button[disabled]{opacity:.35}
+#saveDot{font-size:.85rem;opacity:.85;transition:.2s}
+main{max-width:640px;margin:0 auto;padding:10px 12px 60px}
+.card{background:#fff;border-radius:16px;box-shadow:0 3px 14px rgba(30,40,90,.08);padding:14px;margin:10px 0}
+.center{text-align:center}
+.row{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap}
+h3{margin:0 0 10px;font-size:.98rem;color:#17356e}
+.hint{font-size:.76rem;color:#7b83a0;margin:6px 0 0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:12px;padding:11px 18px;font-family:inherit;font-size:.95rem;font-weight:700;cursor:pointer;text-decoration:none;color:#1e2438;background:#e9ecf5}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:linear-gradient(135deg,#1e56a0,#3f8cff);color:#fff;box-shadow:0 4px 12px rgba(30,86,160,.3)}
+.btn.ghost{background:#eef3ff;color:#1e56a0;border:2px solid #d5e2ff}
+.btn.danger{background:#ffe8ec;color:#d81b60;border:2px solid #ffc9d6}
+.btn.big{width:100%;padding:15px;font-size:1.05rem;margin:7px 0}
+.btn.small{padding:6px 12px;font-size:.8rem;margin-top:0}
+.btn[disabled]{opacity:.5;pointer-events:none}
+details{border:2px solid #e8ecf7;border-radius:14px;padding:10px 14px;margin:10px 0}
+summary{cursor:pointer;font-weight:800;color:#17356e;font-size:.9rem;user-select:none}
+details[open] summary{margin-bottom:8px}
+.field{margin:11px 0;display:flex;flex-direction:column;gap:5px;font-size:.88rem}
+.field>span{font-weight:700;color:#17356e;font-size:.8rem}
+.chips{display:flex;gap:7px;flex-wrap:wrap}
+.chips button{border:2px solid #dfe5f5;background:#f7f9ff;border-radius:999px;padding:7px 13px;font-family:inherit;font-size:.82rem;font-weight:700;cursor:pointer;color:#17356e;white-space:nowrap}
+.chips button.on{background:linear-gradient(135deg,#1e56a0,#3f8cff);color:#fff;border-color:transparent}
+input[type=text],input:not([type]),input[type=number],select{font-family:inherit;font-size:.92rem;padding:9px 12px;border:2px solid #dfe5f5;border-radius:10px;background:#f8f9ff;color:#1e2438;width:100%}
+input:focus,select:focus{outline:none;border-color:#3f8cff}
+input[type=range]{accent-color:#1e56a0;width:100%}
+input[type=color]{width:46px;height:34px;border:1px solid #dfe5f5;border-radius:8px;background:#fff;padding:2px}
+.chk{display:flex;align-items:center;gap:7px;font-weight:700;color:#17356e;cursor:pointer;font-size:.85rem}
+.chk input{width:18px;height:18px;accent-color:#1e56a0}
+#cv{display:block;margin:0 auto 8px;max-width:100%;max-height:52vh;width:auto;height:auto;border-radius:12px;background:#0a0f1e;box-shadow:0 5px 16px rgba(0,0,0,.22)}
+.pbar{height:10px;background:#e4e9f7;border-radius:999px;overflow:hidden;margin:8px 0}
+.pbar div{height:100%;width:0%;background:linear-gradient(90deg,#1e56a0,#3f8cff);border-radius:999px;transition:width .15s}
+/* multi-track timeline */
+.mtl{display:flex;border:2px solid #e8ecf7;border-radius:12px;background:#fbfcff;overflow-x:auto}
+.mtl-labels{flex:0 0 62px;display:flex;flex-direction:column;gap:4px;padding:0 4px 6px}
+.mtl-labels .sp{height:20px}
+.mtl-labels div:not(.sp){height:28px;display:flex;align-items:center;justify-content:center;font-size:.64rem;font-weight:800;color:#5b678f}
+.mtl-body{position:relative;flex:1;padding:4px 6px 6px 0}
+.tl-ruler{position:relative;height:16px;margin-bottom:4px;background:#eef2fb;border-radius:6px;cursor:crosshair}
+.tl-ruler .tick{position:absolute;top:0;bottom:0;border-right:1px solid #c3cfe9;font-size:.52rem;color:#7c86ab;padding:0 3px 0 0;pointer-events:none}
+.tl-lane{position:relative;height:28px;margin-bottom:4px;background:#f1f4fc;border-radius:7px;overflow:hidden}
+.blk{position:absolute;top:3px;bottom:3px;border-radius:5px;font-size:.6rem;color:#fff;display:flex;align-items:center;padding:0 5px;white-space:nowrap;overflow:hidden;cursor:pointer;border:1px solid rgba(255,255,255,.4);user-select:none}
+.blk.k-photo{background:#2e7d32}.blk.k-video{background:#8e24aa}.blk.k-title{background:#17356e}.blk.k-outro{background:#546e7a}
+.blk.k-audio{background:#00695c}.blk.k-music{background:#4a148c}.blk.k-text{background:#c62828}
+.blk.sel{outline:2px solid #ffb300}
+.tl-playhead{position:absolute;top:2px;bottom:4px;width:2px;background:#ff1744;pointer-events:none;z-index:5;box-shadow:0 0 4px rgba(255,23,68,.7)}
+.tl-playhead::before{content:'';position:absolute;top:0;right:-4px;border:5px solid transparent;border-top-color:#ff1744}
+.tedit{border:2px solid #ffd0d6;background:#fff5f6;border-radius:12px;padding:10px 12px;margin-top:8px}
+.clip{display:flex;gap:9px;align-items:stretch;border:2px solid #e8ecf7;border-radius:13px;padding:8px;margin-bottom:8px;cursor:pointer}
+.clip.sel{border-color:#3f8cff;background:#f4f8ff}
+.clip .thumb{width:60px;height:60px;border-radius:9px;object-fit:cover;background:#eee;flex:0 0 auto}
+.clip .meta{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px}
+.clip-name{font-size:.78rem;font-weight:800;color:#3c466b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.clip input.cap{font-size:.85rem;padding:7px 10px}
+.clip input.cap.sub{font-size:.78rem;opacity:.92}
+.clip .row select{width:auto;min-width:88px;font-size:.76rem;padding:5px 7px}
+.clip .ops{display:flex;flex-direction:column;justify-content:space-between;gap:3px}
+.clip .ops button{border:0;background:#eef3ff;border-radius:8px;font-size:.82rem;padding:3px 7px;cursor:pointer}
+.video-tools label{display:inline-flex;align-items:center;gap:4px;font-size:.75rem}
+.video-tools input[type=number]{width:64px;padding:5px 7px;font-size:.8rem}
+.video-tools select{width:auto;font-size:.8rem;padding:5px 7px}
+.stepper{display:inline-flex;align-items:center;gap:5px;background:#f1f4fc;border-radius:999px;padding:3px 7px;font-size:.8rem;font-weight:700}
+.stepper button{border:0;background:#fff;border-radius:999px;width:24px;height:24px;font-size:.95rem;cursor:pointer;color:#1e56a0;font-weight:900}
+.len{font-size:.76rem;font-weight:700;color:#7b83a0}
+.lib{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.lib-item{display:flex;gap:8px;border:2px solid #e8ecf7;border-radius:12px;padding:6px;align-items:center}
+.lib-item img{width:52px;height:52px;border-radius:8px;object-fit:cover;background:#eee}
+.lib-meta{flex:1;min-width:0}
+.lib-name{font-size:.72rem;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lib-ops{display:flex;flex-direction:column;gap:3px}
+.lib-ops button{border:0;background:#eef3ff;border-radius:7px;padding:3px 6px;cursor:pointer;font-size:.8rem}
+.proj-row{display:flex;justify-content:space-between;align-items:center;gap:8px;border:2px solid #e8ecf7;border-radius:12px;padding:8px 10px;margin-bottom:7px}
+.proj-info{display:flex;flex-direction:column;min-width:0}
+#logoPrev img{width:56px;height:56px;object-fit:contain;border:1px dashed #c9d4ee;border-radius:9px;background:#fff}
+#result video{width:100%;max-height:50vh;border-radius:12px;background:#000}
+.mono{direction:ltr;font-variant-numeric:tabular-nums}
+#toasts{position:fixed;bottom:14px;right:14px;left:14px;display:flex;flex-direction:column;align-items:center;gap:6px;z-index:99;pointer-events:none}
+.toast{background:#22315e;color:#fff;border-radius:12px;padding:10px 18px;font-size:.85rem;box-shadow:0 6px 18px rgba(0,0,0,.25);animation:tin .25s;max-width:92%}
+.toast.err{background:#a8324a}
+.toast.out{opacity:0;transition:.4s}
+@keyframes tin{from{transform:translateY(12px);opacity:0}}
+footer{text-align:center;font-size:.72rem;color:#98a0bd;padding:8px 16px 26px}
+.wiz-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+.wiz-grid .full{grid-column:1/-1}
+@media(max-width:420px){.wiz-grid{grid-template-columns:1fr}.wiz-grid .full{grid-column:auto}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <button id="homeBtn" class="tb-home" title="صفحهٔ اول" style="border:0;background:rgba(255,255,255,.12);color:#fff;border-radius:9px;padding:7px 9px;cursor:pointer">🏠</button>
+  <input id="projName" class="proj-name" placeholder="نام گزارش…" >
+  <div class="tb-actions">
+    <span id="saveDot" title="ذخیرهٔ خودکار">💾</span>
+    <button id="undoBtn" title="واگرد (Ctrl+Z)">↩️</button>
+    <button id="redoBtn" title="ازنو (Ctrl+Y)">↪️</button>
+  </div>
+</header>
+<main>
+  <!-- ================= HOME ================= -->
+  <section id="scrHome" class="screen">
+    <div class="card center">
+      <div style="font-size:44px">🏫🎬</div>
+      <h2 style="margin:.1em 0 .5em">گزارش‌ساز</h2>
+      <button id="wizardBtn" class="btn primary big">⚡ ساخت گزارش سریع (پیشنهادی)</button>
+      <button id="newProjBtn" class="btn ghost big">📄 پروژهٔ جدید خالی</button>
+      <button id="demoBtn" class="btn ghost big">✨ نمونهٔ آزمایشی</button>
+      <p class="hint">عکس و فیلم بده، عنوان و لوگو بذار؛ تایم‌لاین خودش ساخته می‌شه و خروجی MP4 می‌گیری.</p>
+    </div>
+    <div class="card" id="wizardCard" hidden>
+      <h3>⚡ ساخت گزارش سریع</h3>
+      <div class="wiz-grid">
+        <div class="field full"><span>عنوان گزارش</span><input id="wTitle" placeholder="مثلاً: گزارش بازدید سرزده از مدرسه"></div>
+        <div class="field"><span>نام مدرسه / کانون / واحد</span><input id="wSchool" value="کانون فرهنگی تربیتی حضرت سلمان"></div>
+        <div class="field"><span>تاریخ</span><input id="wDate" placeholder="۱۴۰۵/۰۷/۰۹"></div>
+        <div class="field"><span>عکس‌ها و فیلم‌ها *</span><label class="btn ghost small" for="wFiles">انتخاب فایل‌ها</label><input type="file" id="wFiles" accept="image/*,video/*" multiple hidden><span class="hint" id="wFilesName"></span></div>
+        <div class="field"><span>مدت هدف (دقیقه)</span><input type="number" id="wTarget" value="2" min="0.5" max="30" step="0.5"></div>
+        <div class="field"><span>نسبت تصویر</span>
+          <select id="wAspect">
+            <option value="16:9">افقی ۱۶:۹ — گزارش اداری / یوتیوب</option>
+            <option value="9:16">عمودی ۹:۱۶ — استوری / ایتا و روبیکا</option>
+            <option value="4:3">۴:۳ — پروژکتور</option>
+            <option value="1:1">مربع ۱:۱ — پست</option>
+          </select>
+        </div>
+        <div class="field"><span>لوگو (اختیاری)</span><label class="btn ghost small" for="wLogo">انتخاب لوگو</label><input type="file" id="wLogo" accept="image/*" hidden></div>
+        <div class="field"><span>موزیک (اختیاری)</span><label class="btn ghost small" for="wMusic">انتخاب موزیک</label><input type="file" id="wMusic" accept="audio/*" hidden></div>
+      </div>
+      <button id="wGo" class="btn primary big">🚀 ساخت خودکار تایم‌لاین</button>
+      <button id="wCancel" class="btn ghost small">بستن</button>
+    </div>
+    <div class="card"><h3>📁 پروژه‌های ذخیره‌شده</h3><div id="projList"></div></div>
+  </section>
+
+  <!-- ================= EDITOR ================= -->
+  <section id="scrEdit" class="screen" hidden>
+    <div class="card center">
+      <canvas id="cv" width="640" height="360"></canvas>
+      <div class="pbar"><div id="pbFill"></div></div>
+      <div class="row">
+        <button id="playBtn" class="btn primary">▶️ پخش</button>
+        <span id="timeLbl" class="hint mono">0.0 / 0.0</span>
+      </div>
+      <p class="hint">Space پخش/توقف • ← → جابه‌جایی • Ctrl+Z واگرد • D تکثیر • S برش</p>
+    </div>
+
+    <div class="card">
+      <h3>🗂️ تایم‌لاین چندلایه</h3>
+      <div class="mtl" id="mtl">
+        <div class="mtl-labels">
+          <div class="sp"></div>
+          <div>متن</div>
+          <div>ویدیو/عکس</div>
+          <div>صدا</div>
+          <div>موزیک</div>
+        </div>
+        <div class="mtl-body" id="mtlBody">
+          <div class="tl-ruler" id="tlRuler"></div>
+          <div class="tl-lane" id="laneTexts"></div>
+          <div class="tl-lane" id="laneVisual"></div>
+          <div class="tl-lane" id="laneAudioTl"></div>
+          <div class="tl-lane" id="laneMusic" style="margin-bottom:0"></div>
+          <div class="tl-playhead" id="tlPH" style="display:none"></div>
+        </div>
+      </div>
+      <div class="row" style="justify-content:flex-start;margin-top:8px">
+        <button id="addTextBtn" class="btn ghost small">➕ متن در زمان فعلی</button>
+        <span class="hint">روی خط‌کش بزن برای پرش • روی بلوک‌ها بزن برای انتخاب</span>
+      </div>
+      <div class="tedit" id="textEdit" hidden>
+        <div class="field"><span>متن</span><input id="txTextInput" placeholder="مثلاً: دبیرستان شهید بهشتی"></div>
+        <div class="row" style="justify-content:flex-start;gap:6px">
+          <label class="hint">شروع <input type="number" id="txStart" min="0" step="0.5" style="width:70px"></label>
+          <label class="hint">مدت <input type="number" id="txDur" min="0.5" step="0.5" style="width:70px"></label>
+          <select id="txPos" style="width:auto"><option value="bottom">پایین</option><option value="middle">وسط</option><option value="top">بالا</option></select>
+          <select id="txAnim" style="width:auto"><option value="fade">محو</option><option value="pop">پرش</option><option value="slide">ورود از کنار</option><option value="type">تایپ شدن ⌨️</option></select>
+          <input type="color" id="txColor" value="#ffffff" title="رنگ">
+          <button id="txDel" class="btn danger small">🗑️</button>
+          <button id="txClose" class="btn ghost small">بستن</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🎞️ تایم‌لاین <span class="hint" id="tlMeta"></span></h3>
+      <div id="clipList"></div>
+      <div class="row" style="justify-content:flex-start">
+        <label class="btn ghost small" for="addMediaIn">➕ افزودن عکس/فیلم</label>
+        <input type="file" id="addMediaIn" accept="image/*,video/*" multiple hidden>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📚 رسانه‌های پروژه</h3>
+      <div id="libGrid" class="lib"></div>
+      <p class="hint" id="audioLine"></p>
+    </div>
+
+    <details class="card" open>
+      <summary>⚙️ قاب، نمایش و حرکت</summary>
+      <div class="field"><span>نسبت تصویر</span><div class="chips" id="aspectChips"></div></div>
+      <div class="field" id="customDims" style="display:none"><span>سایز سفارشی (پیکسل)</span>
+        <div class="row" style="justify-content:flex-start">
+          <input type="number" id="cw" style="width:90px"> ×
+          <input type="number" id="ch" style="width:90px">
+          <button id="cwApply" class="btn ghost small">اعمال</button>
+        </div>
+      </div>
+      <div class="field"><span>نحوهٔ نمایش پیش‌فرض عکس/ویدئو</span>
+        <select id="fitSel"><option value="fill">پرکردن کادر (Fill) — برش دارد</option><option value="fit">نمایش کامل (Fit) — با پس‌زمینه</option></select>
+      </div>
+      <div class="field"><span>پس‌زمینهٔ فضای خالی (حالت Fit)</span>
+        <div class="row" style="justify-content:flex-start">
+          <select id="bgSel" style="max-width:220px">
+            <option value="blur">بلور خود عکس</option><option value="darkblur">بلور تیره</option>
+            <option value="lightblur">بلور روشن</option><option value="mirror">آینه‌ای</option>
+            <option value="solid">رنگ یکدست</option><option value="gradient">گرادیان تم</option>
+          </select>
+          <input type="color" id="bgColorIn" title="رنگ پس‌زمینهٔ یکدست">
+          <button id="applyFitAll" class="btn ghost small">اعمال به همه</button>
+        </div>
+      </div>
+      <div class="field"><span>حرکت پیش‌فرض روی عکس‌ها</span>
+        <div class="row" style="justify-content:flex-start">
+          <select id="motionSel" style="max-width:200px">
+            <option value="auto">خودکار (متناوب)</option><option value="zoomin">زوم به داخل</option>
+            <option value="zoomout">زوم به خارج</option><option value="panlr">پن افقی</option>
+            <option value="panud">پن عمودی</option><option value="cine">سینمایی آهسته</option>
+            <option value="none">بدون حرکت</option>
+          </select>
+          <span class="hint">شدت</span><input type="range" id="motionIntR" min="0.3" max="2" step="0.1" style="width:90px">
+          <b class="hint" id="motionIntLbl">×1.0</b>
+          <button id="applyMotionAll" class="btn ghost small">اعمال به همه</button>
+        </div>
+      </div>
+      <div class="field"><span>حالت جابه‌جایی بین کلیپ‌ها</span>
+        <div class="row" style="justify-content:flex-start">
+          <select id="transSel" style="max-width:180px">
+            <option value="fade">محو</option><option value="cut">برش</option><option value="slide">کشویی</option>
+            <option value="zoom">زوم</option><option value="push">هل دادن</option><option value="wipe">پرده‌ای</option>
+            <option value="bounce">فنری</option><option value="spin">چرخشی</option><option value="blur">بلور</option>
+          </select>
+          <span class="hint">مدت</span><input type="range" id="transDurR" min="0.2" max="1" step="0.1" style="width:80px"><b class="hint" id="transDurLbl">0.5s</b>
+        </div>
+      </div>
+      <div class="field"><span>مدت نمایش هر عکس</span>
+        <div class="row" style="justify-content:flex-start">
+          <input type="range" id="photoDurR" min="1" max="10" step="0.5" style="width:130px"><b class="hint" id="photoDurLbl">3.0s</b>
+          <button id="applyDurAll" class="btn ghost small">اعمال به همهٔ عکس‌ها</button>
+        </div>
+      </div>
+      <div class="field"><span>فیلتر رنگی کلی</span>
+        <select id="filterSel">
+          <option value="none">عادی</option><option value="vivid">زنده</option><option value="warm">گرم</option>
+          <option value="cool">خنک</option><option value="cinematic">سینمایی</option><option value="mono">سیاه‌وسفید</option>
+        </select>
+      </div>
+      <div class="field"><span>تم رنگی اسلایدهای عنوان/پایان</span><div class="chips" id="themeChips"></div></div>
+      <div class="field"><label class="chk"><input type="checkbox" id="fxChk"> افکت‌های شناور بامزه (برای گزارش رسمی خاموش باشد)</label></div>
+    </details>
+
+    <details class="card">
+      <summary>✒️ متن، فونت، لوگو و سرصفحه</summary>
+      <div class="field"><span>فونت فارسی</span><div class="chips" id="fontChips"></div></div>
+      <div class="field"><span>جای متن کپشن</span>
+        <select id="textPosSel"><option value="bottom">پایین</option><option value="middle">وسط</option><option value="top">بالا</option></select>
+      </div>
+      <div class="field"><span>اندازهٔ متن کپشن</span><input type="range" id="capSizeR" min="0.6" max="1.8" step="0.1"></div>
+      <div class="field"><span>عنوان اول ویدیو</span><input id="titleIn" placeholder="مثلاً: گزارش بازدید از مدرسه…"></div>
+      <div class="field"><span>نام مدرسه / واحد</span><input id="schoolIn" placeholder="در اسلاید عنوان نمایش داده می‌شود"></div>
+      <div class="field"><span>تاریخ</span><input id="dateIn" placeholder="۱۴۰۵/۰۷/۰۹"></div>
+      <div class="field"><span>متن پایان ویدیو</span><input id="outroIn" placeholder="با تشکر…"></div>
+      <div class="field"><span>سرصفحه (بالای همهٔ فریم‌ها)</span><input id="headerIn" placeholder="مثلاً: ادارهٔ آموزش و پرورش منطقه…"></div>
+      <div class="field"><span>پاصفحه (پایین همهٔ فریم‌ها)</span><input id="footerIn" placeholder="مثلاً: نام مدرسه • تاریخ"></div>
+      <div class="field"><span>لوگو / واترمارک</span>
+        <div class="row" style="justify-content:flex-start">
+          <label class="btn ghost small" for="logoIn">انتخاب تصویر لوگو</label>
+          <input type="file" id="logoIn" accept="image/*" hidden>
+          <span id="logoPrev"></span>
+          <button id="logoRm" class="btn danger small">حذف لوگو</button>
+        </div>
+        <div class="row" style="justify-content:flex-start">
+          <select id="logoPosSel" style="max-width:150px">
+            <option value="tl">بالا-چپ</option><option value="tr">بالا-راست</option>
+            <option value="bl">پایین-چپ</option><option value="br">پایین-راست</option>
+          </select>
+          <span class="hint">اندازه</span><input type="range" id="logoSizeR" min="0.05" max="0.4" step="0.01" style="width:80px">
+          <span class="hint">شفافیت</span><input type="range" id="logoOpR" min="0.2" max="1" step="0.05" style="width:80px">
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary>🎵 صدا</summary>
+      <div class="field"><span>صدا روی تایم‌لاین (چند فایل، هرکدام با زمان شروع مستقل)</span>
+        <div class="row" style="justify-content:flex-start">
+          <label class="btn ghost small" for="laneAudioIn">➕ افزودن فایل صوتی</label>
+          <input type="file" id="laneAudioIn" accept="audio/*" multiple hidden>
+          <span class="hint">در «زمان فعلیِ پخش» قرار می‌گیرد</span>
+        </div>
+        <div id="audioLane"></div>
+      </div>
+      <div class="field"><span>موزیک زمینه (تمام مدت، تکرارشونده)</span>
+        <div class="row" style="justify-content:flex-start">
+          <label class="btn ghost small" for="musicIn">انتخاب موزیک</label>
+          <input type="file" id="musicIn" accept="audio/*" hidden>
+          <span id="musicName" class="hint"></span>
+        </div>
+      </div>
+      <div class="field"><span>بلندی موزیک</span><input type="range" id="musicVolR" min="0" max="1" step="0.05"></div>
+      <div class="field"><label class="chk"><input type="checkbox" id="musicFadeChk" checked> محو شدن اول و آخر (Fade)</label></div>
+      <p class="hint">صدای خود ویدئوها از کارت هر کلیپ (داویت، ولوم، سرعت) کنترل می‌شود. پیش‌نمایش بی‌صداست؛ صدا در خروجی اعمال می‌شود.</p>
+    </details>
+
+    <details class="card" open>
+      <summary>🎥 خروجی ویدیو</summary>
+      <div class="field"><span>حالت خروجی</span>
+        <div class="chips" id="expModeChips">
+          <button data-em="quality" class="on">🎚️ کیفیت دلخواه</button>
+          <button data-em="size">📦 حجم مشخص</button>
+        </div>
+      </div>
+      <div class="field" id="sizeModeBox" style="display:none">
+        <span>حجم هدف فایل (مگابایت) — تنظیمات خودکار پیشنهاد می‌شود</span>
+        <div class="row" style="justify-content:flex-start">
+          <input type="number" id="expSizeMB" value="15" min="1" max="4096" step="0.5" style="width:110px">
+          <span class="hint">MB</span>
+        </div>
+        <p class="hint" id="sizeCalc"></p>
+        <p class="hint" id="sizeWarn" style="color:#b0507a"></p>
+        <p class="hint">حجم نهایی همیشه نزدیک یا کمتر از این عدد است تا در پیام‌رسان‌ها و حافظه جا شود.</p>
+      </div>
+      <div id="qualityModeBox">
+        <div class="field"><span>کیفیت (پهنای کوتاه فریم)</span><div class="chips" id="resChips"></div></div>
+        <div class="field"><span>فریم‌بر ثانیه</span><div class="chips" id="fpsChips"></div></div>
+        <div class="field"><span>حالت فشرده‌سازی</span><div class="chips" id="qChips"></div></div>
+        <p class="hint" id="manualEst"></p>
+      </div>
+      <button id="exportBtn" class="btn primary big">🎥 ساخت ویدیو (<span id="expPreset">1080p • 30fps</span>)</button>
+      <button id="cancelBtn" class="btn danger big" hidden>⏹ لغو</button>
+      <div id="exBox" hidden>
+        <div class="pbar"><div id="exFill"></div></div>
+        <p id="exText" class="hint center"></p>
+      </div>
+      <p class="hint">خروجی MP4 (و در صورت پشتیبانی مرورگر WebM). حین ساخت صفحه را باز نگه دارید.</p>
+    </details>
+
+    <div class="card center" id="result" hidden>
+      <h3>🎉 ویدیوی گزارش آماده‌ست!</h3>
+      <video id="resVid" controls loop playsinline></video>
+      <p class="hint" id="resSize"></p>
+      <div class="row" style="margin-top:10px">
+        <a id="dlBtn" class="btn primary" download>⬇️ دانلود</a>
+        <button id="shareBtn" class="btn ghost">📤 اشتراک‌گذاری</button>
+        <button id="againBtn" class="btn ghost">بستن</button>
+      </div>
+    </div>
+  </section>
+</main>
+<footer>همه‌چیز داخل مرورگر خودت پردازش می‌شود — فایل‌ها جایی آپلود نمی‌شوند 🔒</footer>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
